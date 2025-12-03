@@ -103,6 +103,124 @@
             border-radius: 1.5rem;
             box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
         }
+
+        /* SLIDER 3D CAROUSEL STYLES */
+        #carousel-container {
+            perspective: 1200px; /* Increased perspective for deeper 3D */
+            overflow: hidden; 
+        }
+        
+        .carousel-track {
+            position: relative;
+            height: 500px;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        @media (min-width: 768px) {
+            .carousel-track {
+                height: 600px;
+            }
+        }
+
+        .slide {
+            position: absolute;
+            width: 75%; /* Mobile width */
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            transition: all 0.6s cubic-bezier(0.25, 0.8, 0.25, 1);
+            border-radius: 1.5rem;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.3);
+            cursor: pointer;
+            background: white;
+            overflow: hidden;
+        }
+
+        @media (min-width: 768px) {
+            .slide {
+                width: 50%; /* Desktop width */
+            }
+        }
+
+        /* UPDATED SLIDE STATES FOR LARGER CENTER IMAGE */
+        .slide.active {
+            opacity: 1;
+            z-index: 30;
+            /* Scale up slightly to emphasize */
+            transform: translate(-50%, -50%) scale(1.1); 
+            border: 4px solid #6ef08e; /* CTA Lime Green Highlight */
+            box-shadow: 0 30px 60px -10px rgba(0, 0, 0, 0.4);
+        }
+
+        .slide.prev {
+            opacity: 0.5;
+            z-index: 10;
+            /* Move left and scale down significantly */
+            transform: translate(-130%, -50%) scale(0.65) !important;
+            filter: blur(2px) grayscale(30%);
+        }
+
+        .slide.next {
+            opacity: 0.5;
+            z-index: 10;
+            /* Move right and scale down significantly */
+            transform: translate(30%, -50%) scale(0.65) !important;
+            filter: blur(2px) grayscale(30%);
+        }
+
+        .slide.hidden-slide {
+            opacity: 0;
+            z-index: 0;
+            transform: translate(-50%, -50%) scale(0.4);
+            pointer-events: none;
+        }
+
+        /* Category Label */
+        .category-label {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            background-color: rgba(255, 255, 255, 0.95);
+            color: #0b3224; /* brand-900 */
+            font-weight: 700;
+            padding: 0.5rem 1rem;
+            border-radius: 9999px; /* rounded-full */
+            font-size: 0.75rem; /* text-xs */
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            z-index: 30;
+            border: 1px solid #e2e8f0;
+        }
+
+        /* Description Box */
+        .description-box {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: linear-gradient(to top, rgba(11, 50, 36, 0.98) 0%, rgba(11, 50, 36, 0.85) 100%);
+            color: white;
+            padding: 1.5rem;
+            transform: translateY(100%); /* Hidden by default */
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            z-index: 30;
+            backdrop-filter: blur(4px);
+        }
+
+        .slide:hover .description-box {
+            transform: translateY(0); /* Show on hover */
+        }
+        
+        /* Always show description on mobile active slide for better UX */
+        @media (hover: none) {
+            .slide.active .description-box {
+                transform: translateY(0);
+            }
+        }
     </style>
 </head>
 <body class="font-sans text-slate-700 antialiased selection:bg-cta selection:text-brand-900">
@@ -204,15 +322,17 @@
         </div>
     </section>
 
-    <!-- PROBLEM SECTION: The Challenge (Restored Multi-color Cards) -->
+    <!-- PROBLEM SECTION -->
     <section id="problem" class="py-24 bg-brand-50/50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center max-w-3xl mx-auto mb-16 reveal">
+                <!-- UPDATED: Fixed cut-off by removing nowrap on mobile, and shortened subheader -->
                 <h2 class="text-3xl lg:text-4xl font-serif font-bold text-brand-900 mb-6 leading-loose">
-                    Khi quy mô mở rộng, mô hình <br class="hidden md:block"> <span class="text-red-600 bg-red-50 px-4 py-1 rounded-full whitespace-nowrap inline-block mt-2 md:mt-0">quản trị cũ liệu còn phù hợp?</span>
+                    Khi quy mô mở rộng, mô hình <br class="hidden md:block"> 
+                    <span class="text-red-600 bg-red-50 px-4 py-1 rounded-full inline-block mt-2 md:mt-0">quản trị cũ liệu còn phù hợp?</span>
                 </h2>
                 <p class="text-slate-600 text-lg leading-relaxed">
-                    Doanh nghiệp đang đối mặt với những rào cản mang tính hệ thống (Systemic Bottlenecks):
+                    Doanh nghiệp đang đối mặt với những rào cản mang tính hệ thống - Systemic Bottlenecks:
                 </p>
             </div>
 
@@ -283,7 +403,6 @@
                 <!-- Content Left -->
                 <div class="reveal order-2 lg:order-1">
                     <div class="space-y-10">
-                        <!-- The Gap Identified -->
                         <div class="relative pl-8 border-l border-slate-200">
                             <h3 class="font-serif font-bold text-slate-800 text-xl mb-4">Khoảng trống của Thị trường:</h3>
                             <div class="space-y-5">
@@ -385,7 +504,7 @@
                             </div>
                         </div>
 
-                        <!-- BeeGrowth Sweet Spot (Lime Green Pulse) -->
+                        <!-- BeeGrowth Sweet Spot -->
                         <div class="absolute bottom-[30%] right-[30%] transform translate-x-1/2 translate-y-1/2 flex flex-col items-center z-20 group">
                             <div class="relative flex items-center justify-center cursor-pointer">
                                 <div class="absolute w-20 h-20 bg-cta/20 rounded-full animate-ping"></div>
@@ -407,7 +526,7 @@
         </div>
     </section>
 
-    <!-- METHODOLOGY: The Framework (Restored Dark Theme) -->
+    <!-- METHODOLOGY -->
     <section id="methodology" class="py-24 bg-brand-900 text-white rounded-t-4xl rounded-b-4xl mx-4 my-8 lg:mx-8">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-16 reveal">
@@ -465,22 +584,70 @@
         </div>
     </section>
 
-    <!-- VISUAL DEMONSTRATION (New Section for GIF - FIXED URL) -->
-    <section id="visual-demo" class="py-20 bg-white border-b border-slate-100">
-        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 reveal">
-            <div class="text-center mb-12">
-                <h2 class="text-2xl lg:text-3xl font-serif font-bold text-slate-900 mb-4">
-                    Minh họa Luồng dữ liệu (Working System)
+    <!-- VISUAL DEMONSTRATION (UPDATED 3D CAROUSEL) -->
+    <!-- Reduced vertical padding from py-20 to py-10 for tighter look -->
+    <section id="visual-demo" class="py-10 bg-white border-b border-slate-100 overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 reveal">
+            <!-- Reduced bottom margin from mb-12 to mb-8 -->
+            <div class="text-center mb-8">
+                <h2 class="text-2xl lg:text-3xl font-serif font-bold text-slate-900 mb-3">
+                    Vẻ đẹp của Sự Tích hợp Toàn diện
                 </h2>
-                <p class="text-slate-500 max-w-2xl mx-auto">Tất cả dữ liệu được số hóa và kết nối, phục vụ mục tiêu ra quyết định thời gian thực.</p>
+                <p class="text-slate-500 max-w-2xl mx-auto italic">
+                    "Khi công nghệ và quy trình hòa quyện, dữ liệu không chỉ là con số, mà là một dòng chảy nghệ thuật giúp doanh nghiệp vận hành không điểm nghẽn."
+                </p>
             </div>
             
-            <div class="gif-container p-6 border-4 border-brand-500 rounded-3xl bg-brand-50/50 shadow-xl overflow-hidden">
-                <!-- Updated URL as requested -->
-                <img src="https://ik.imagekit.io/TNConsultant/Beegrowth/To%CC%82%CC%81i%20Va%CC%A3%CC%82n%20Ha%CC%80nh%20vo%CC%9B%CC%81i%20Lark%20_New_.gif" 
-                     alt="Minh họa luồng dữ liệu Sales, CSKH, HR, Kho hàng tự động" 
-                     loading="lazy"
-                     onerror="this.onerror=null; this.src='https://ik.imagekit.io/TNConsultant/Beegrowth/BEEGROWTH%20LOGO-1.png'; this.parentElement.innerHTML+='<p class=\'text-center text-red-500 mt-2\'>GIF failed to load. Please check file path.</p>';">
+            <!-- CAROUSEL WRAPPER -->
+            <div id="carousel-container" class="relative w-full">
+                <!-- Navigation Buttons (Outside for easier access) -->
+                <button id="prevBtn" class="absolute left-2 md:left-10 top-1/2 -translate-y-1/2 z-40 bg-white/90 hover:bg-white text-brand-900 p-3 md:p-4 rounded-full shadow-xl transition transform hover:scale-110 focus:outline-none border border-brand-100">
+                    <i class="fa-solid fa-chevron-left text-xl"></i>
+                </button>
+                <button id="nextBtn" class="absolute right-2 md:right-10 top-1/2 -translate-y-1/2 z-40 bg-white/90 hover:bg-white text-brand-900 p-3 md:p-4 rounded-full shadow-xl transition transform hover:scale-110 focus:outline-none border border-brand-100">
+                    <i class="fa-solid fa-chevron-right text-xl"></i>
+                </button>
+
+                <!-- Track - Adjusted height for tighter display (400px mobile / 550px desktop) -->
+                <div class="carousel-track h-[400px] md:h-[550px] flex items-center justify-center relative w-full">
+                    
+                    <!-- Slide 1 -->
+                    <div class="slide active" data-index="0">
+                        <span class="category-label">Data flow</span>
+                        <img src="https://ik.imagekit.io/TNConsultant/Beegrowth/To%CC%82%CC%81i%20Va%CC%A3%CC%82n%20Ha%CC%80nh%20vo%CC%9B%CC%81i%20Lark%20_New_.gif" 
+                             alt="Minh họa luồng dữ liệu Sales, CSKH, HR" 
+                             class="w-full h-full object-cover">
+                        <div class="description-box">
+                            <p class="text-base font-bold text-cta mb-1">Tổng quan Luồng dữ liệu Tự động hóa</p>
+                            <p class="text-sm opacity-90">Mô tả chi tiết về cách dữ liệu được tự động hóa giữa các phòng ban Sales, CSKH và HR.</p>
+                        </div>
+                    </div>
+
+                    <!-- Slide 2 -->
+                    <div class="slide next" data-index="1">
+                        <span class="category-label">Master process</span>
+                        <img src="https://ik.imagekit.io/TNConsultant/Beegrowth/To%CC%82%CC%81i%20Va%CC%A3%CC%82n%20Ha%CC%80nh%20vo%CC%9B%CC%81i%20Lark%20_New_%20(1).gif" 
+                             alt="Chi tiết vận hành trên Lark Suite" 
+                             class="w-full h-full object-cover">
+                        <div class="description-box">
+                            <p class="text-base font-bold text-cta mb-1">Chi tiết Vận hành & Kết nối các phòng ban</p>
+                            <p class="text-sm opacity-90">Đi sâu vào quy trình vận hành chính và cách các phòng ban kết nối với nhau trên nền tảng Lark Suite.</p>
+                        </div>
+                    </div>
+
+                    <!-- Slide 3 -->
+                    <div class="slide prev" data-index="2">
+                        <span class="category-label">Vận hành liên phòng ban</span>
+                        <img src="https://ik.imagekit.io/TNConsultant/Beegrowth/_10.2025_%20So%CC%82%CC%81%20hoa%CC%81%20va%CC%A3%CC%82n%20ha%CC%80nh.gif" 
+                             alt="Quy trình Số hóa Vận hành 2025" 
+                             class="w-full h-full object-cover">
+                        <div class="description-box">
+                            <p class="text-base font-bold text-cta mb-1">Lộ trình Số hóa Vận hành Toàn diện (Vision 2025)</p>
+                            <p class="text-sm opacity-90">Tầm nhìn về một hệ thống vận hành số hóa toàn diện, kết nối liền mạch mọi hoạt động của doanh nghiệp.</p>
+                        </div>
+                    </div>
+
+                </div>
             </div>
         </div>
     </section>
@@ -668,7 +835,7 @@
         </div>
     </footer>
 
-    <!-- SCRIPT FOR ANIMATIONS -->
+    <!-- SCRIPT FOR ANIMATIONS & SLIDER -->
     <script>
         // Reveal on Scroll
         function reveal() {
@@ -690,9 +857,83 @@
         const btn = document.querySelector("button.mobile-menu-button");
         const menu = document.querySelector(".mobile-menu");
 
-        btn.addEventListener("click", () => {
-            menu.classList.toggle("hidden");
+        if(btn && menu) {
+            btn.addEventListener("click", () => {
+                menu.classList.toggle("hidden");
+            });
+        }
+
+        // --- 3D ROTATING CAROUSEL LOGIC ---
+        const slides = document.querySelectorAll('.slide');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        let currentIndex = 0;
+        const totalSlides = slides.length;
+
+        function updateCarousel() {
+            slides.forEach((slide, index) => {
+                // Reset classes
+                slide.className = 'slide';
+                
+                // Calculate position relative to current index
+                // We need circular logic
+                let position = (index - currentIndex + totalSlides) % totalSlides;
+                
+                if (position === 0) {
+                    slide.classList.add('active');
+                } else if (position === totalSlides - 1) {
+                    slide.classList.add('prev');
+                } else if (position === 1) {
+                    slide.classList.add('next');
+                } else {
+                    slide.classList.add('hidden-slide');
+                }
+            });
+        }
+
+        function nextSlide() {
+            currentIndex = (currentIndex + 1) % totalSlides;
+            updateCarousel();
+        }
+
+        function prevSlide() {
+            currentIndex = (currentIndex - 1 + totalSlides) % totalSlides;
+            updateCarousel();
+        }
+
+        // Event Listeners
+        if(nextBtn) nextBtn.addEventListener('click', nextSlide);
+        if(prevBtn) prevBtn.addEventListener('click', prevSlide);
+
+        // Click on slide to make it active
+        slides.forEach((slide, index) => {
+            slide.addEventListener('click', () => {
+                // If it's prev, go prev. If next, go next.
+                let position = (index - currentIndex + totalSlides) % totalSlides;
+                if (position === totalSlides - 1) {
+                    prevSlide();
+                } else if (position === 1) {
+                    nextSlide();
+                }
+            });
         });
+
+        // Initialize
+        updateCarousel();
+
+        // Auto rotate
+        let autoRotate = setInterval(nextSlide, 5000); // 5 seconds
+
+        // Pause on hover
+        const container = document.getElementById('carousel-container');
+        if(container) {
+            container.addEventListener('mouseenter', () => clearInterval(autoRotate));
+            container.addEventListener('mouseleave', () => {
+                autoRotate = setInterval(nextSlide, 5000);
+            });
+        }
+
     </script>
 </body>
 </html>
+```
