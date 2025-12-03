@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="vi" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BeeGrowth - Tái Cấu Trúc Vận Hành Bán Lẻ Thực Chiến</title>
+    
+    <!-- Fonts: Merriweather (Trust/Corporate) & Inter (Modern/Clean) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Config Colors & Fonts -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#f2f8f6', /* Very Light Green Tint (Backgrounds) */
+                            100: '#dbece6', /* Light Mint */
+                            400: '#4da685', /* Lighter Green */
+                            500: '#175c44', /* BCG Main Green (Text/Headers/Primary BG) */
+                            600: '#114a36', /* Darker Green */
+                            900: '#0b3224', /* Deepest Green */
+                        },
+                        cta: {
+                            DEFAULT: '#6ef08e', /* Bright Lime Green from your image */
+                            hover: '#5ce07b',
+                        },
+                        slate: {
+                            850: '#1e293b', /* Deep Slate for Backgrounds */
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Merriweather', 'serif'],
+                    },
+                    borderRadius: {
+                        '4xl': '2rem',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Custom Styles */
+        .hero-pattern {
+            background-color: #ffffff;
+            background-image: radial-gradient(#e2e8f0 1px, transparent 1px);
+            background-size: 24px 24px;
+        }
+        
+        .quadrant-grid {
+            background-image: linear-gradient(#cbd5e1 1px, transparent 1px), linear-gradient(90deg, #cbd5e1 1px, transparent 1px);
+            background-size: 50px 50px;
+        }
+
+        /* Smooth reveal animation */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease-out;
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Glowing effect for the Point */
+        .glow-point {
+            box-shadow: 0 0 15px 5px rgba(110, 240, 142, 0.6);
+            animation: pulse-glow 2s infinite;
+        }
+
+        @keyframes pulse-glow {
+            0% { box-shadow: 0 0 0 0 rgba(110, 240, 142, 0.7); }
+            70% { box-shadow: 0 0 0 15px rgba(110, 240, 142, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(110, 240, 142, 0); }
+        }
+    </style>
+</head>
+<body class="font-sans text-slate-700 antialiased selection:bg-cta selection:text-brand-900">
+
+    <!-- NAVIGATION -->
+    <nav class="fixed w-full z-50 bg-white/95 backdrop-blur-sm border-b border-slate-200 transition-all duration-300 shadow-sm rounded-b-3xl" id="navbar">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-22 py-4 items-center">
+                <!-- Logo -->
+                <div class="flex-shrink-0 flex items-center gap-2 cursor-pointer" onclick="window.scrollTo(0,0)">
+                    <img src="https://ik.imagekit.io/TNConsultant/Beegrowth/BEEGROWTH%20LOGO-1.png" alt="BeeGrowth Logo" class="h-14 w-auto object-contain">
+                </div>
+
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex space-x-8 items-center">
+                    <a href="#problem" class="text-slate-600 hover:text-brand-600 font-medium transition">Bẫy Quy Mô</a>
+                    <a href="#differentiation" class="text-slate-600 hover:text-brand-600 font-medium transition">Khác Biệt</a>
+                    <a href="#methodology" class="text-slate-600 hover:text-brand-600 font-medium transition">Giải Pháp</a>
+                    <a href="#expert" class="text-slate-600 hover:text-brand-600 font-medium transition">Expert</a>
+                    <!-- CTA Button: Curved & Bright Green -->
+                    <a href="#contact" class="px-8 py-3 bg-cta text-brand-900 font-bold rounded-full hover:bg-cta-hover transition shadow-lg shadow-cta/30 transform hover:-translate-y-0.5 border border-transparent hover:border-cta-hover">
+                        Đăng ký Healthcheck
+                    </a>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden flex items-center">
+                    <button class="mobile-menu-button text-slate-600 hover:text-brand-600 focus:outline-none">
+                        <i class="fa-solid fa-bars text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- Mobile Menu -->
+        <div class="hidden mobile-menu md:hidden bg-white border-t border-slate-100 shadow-lg absolute w-full rounded-b-3xl">
+            <a href="#problem" class="block py-3 px-6 text-sm hover:bg-slate-50 text-slate-700 font-medium">Bẫy Quy Mô</a>
+            <a href="#differentiation" class="block py-3 px-6 text-sm hover:bg-slate-50 text-slate-700 font-medium">Khác Biệt</a>
+            <a href="#methodology" class="block py-3 px-6 text-sm hover:bg-slate-50 text-slate-700 font-medium">Giải Pháp</a>
+            <div class="p-4">
+                <a href="#contact" class="block w-full py-3 text-center bg-cta text-brand-900 font-bold rounded-full">Đăng ký Healthcheck ngay</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- HERO SECTION -->
+    <section class="relative pt-36 pb-20 lg:pt-48 lg:pb-32 hero-pattern overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+                <!-- Text Content -->
+                <div class="reveal active">
+                    <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-brand-50 border border-brand-100 text-brand-900 text-xs font-bold tracking-wider uppercase mb-8 shadow-sm">
+                        <span class="w-2 h-2 rounded-full bg-brand-500 animate-pulse"></span>
+                        Cảnh báo cho Founder Retail 20-100 tỷ
+                    </div>
+                    <h1 class="text-4xl lg:text-5xl font-serif font-bold text-slate-900 leading-tight mb-6">
+                        Đừng để Doanh thu tăng trưởng nhưng <span class="relative inline-block text-brand-600">Lợi nhuận "bốc hơi"<span class="absolute bottom-1 left-0 w-full h-3 bg-cta/40 -z-10 transform -rotate-1 rounded-full"></span></span> vì Lỗ hổng Vận hành.
+                    </h1>
+                    <p class="text-lg text-slate-600 mb-10 leading-relaxed">
+                        <strong>BeeGrowth</strong> giúp các chuỗi Bán lẻ & Thời trang chuyển hóa từ mô hình quản lý cảm tính sang <strong>Hệ thống Số hóa Thực chiến</strong>. Chúng tôi không chỉ đưa lời khuyên, chúng tôi thiết kế & bàn giao <strong>Working Files chạy được ngay</strong>.
+                    </p>
+                    
+                    <div class="flex flex-col sm:flex-start gap-4">
+                        <a href="#contact" class="inline-flex justify-center items-center px-10 py-4 bg-cta text-brand-900 font-bold rounded-full hover:bg-cta-hover transition shadow-xl shadow-cta/40 text-lg transform hover:-translate-y-1">
+                            Đăng ký Healthcheck (Chẩn đoán)
+                        </a>
+                        <p class="text-xs text-slate-500 italic ml-4"><i class="fa-solid fa-circle-info mr-1"></i> Giới hạn 5 suất Consult trực tiếp mỗi tháng</p>
+                    </div>
+                </div>
+
+                <!-- Hero Image -->
+                <div class="relative reveal">
+                    <!-- Background blobs -->
+                    <div class="absolute -top-10 -right-10 w-72 h-72 bg-cta/20 rounded-full blur-3xl opacity-60"></div>
+                    <div class="absolute -bottom-10 -left-10 w-64 h-64 bg-slate-200 rounded-full blur-3xl opacity-60"></div>
+                    
+                    <!-- Main Image Frame: Rounded 3xl for smoother curve -->
+                    <div class="relative rounded-3xl overflow-hidden shadow-2xl border-4 border-white transform rotate-2 hover:rotate-0 transition duration-500 group">
+                        <img src="https://images.unsplash.com/photo-1531403009284-440f080d1e12?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" 
+                             alt="Consultant planning flowchart on whiteboard" 
+                             class="w-full h-[500px] object-cover object-center group-hover:scale-105 transition duration-700 grayscale hover:grayscale-0">
+                        
+                        <!-- Floating Badge -->
+                        <div class="absolute bottom-6 left-6 right-6 bg-white/95 backdrop-blur p-5 rounded-3xl shadow-lg border border-slate-100">
+                            <div class="flex items-start gap-4">
+                                <div class="w-12 h-12 rounded-full bg-brand-100 flex items-center justify-center text-brand-600 text-xl shrink-0">
+                                    <i class="fa-solid fa-check-double"></i>
+                                </div>
+                                <div>
+                                    <p class="font-bold text-slate-800 text-sm">Kết quả thực tế:</p>
+                                    <p class="text-xs text-slate-500 mt-1">"Từ lúc rối tung, giờ tôi chỉ mất 15p mỗi ngày để nắm toàn bộ chỉ số cửa hàng."</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PROBLEM SECTION: The Scaling Trap -->
+    <section id="problem" class="py-24 bg-brand-50/50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16 reveal">
+                <h2 class="text-3xl lg:text-4xl font-serif font-bold text-brand-900 mb-6">
+                    Doanh nghiệp của bạn có đang rơi vào <br> <span class="text-red-600 bg-red-50 px-4 py-1 rounded-full">"Bẫy Quy Mô"?</span>
+                </h2>
+                <p class="text-slate-600 text-lg leading-relaxed">
+                    Bạn đã vượt qua giai đoạn sống còn. Bạn có doanh thu, có nhân sự, có hàng hóa. <br>
+                    Nhưng khi quy mô mở rộng, bộ máy bắt đầu "kêu cứu":
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Card 1: Rounded-3xl for smooth edges -->
+                <div class="bg-white p-8 rounded-3xl border border-slate-100 shadow-sm hover:shadow-xl hover:-translate-y-1 transition duration-300 reveal group hover:border-brand-500">
+                    <div class="w-14 h-14 bg-red-50 text-red-600 rounded-2xl flex items-center justify-center text-2xl mb-6 group-hover:bg-red-600 group-hover:text-white transition shadow-sm">
+                        <i class="fa-solid fa-chart-simple"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-slate-800 mb-3">❌ Mù số liệu</h3>
+                    <p class="text-slate-500 text-sm leading-relaxed">
+                        Cuối tháng mới biết lãi/lỗ. Không biết tiền đang nằm kẹt ở đâu (kho hàng, công nợ hay hàng hoàn?).
+                    </p>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="bg-white p-8 rounded-3xl border border-slate-100 shadow-sm hover:shadow-xl hover:-translate-y-1 transition duration-300 reveal group hover:border-brand-500" style="transition-delay: 100ms;">
+                    <div class="w-14 h-14 bg-orange-50 text-orange-600 rounded-2xl flex items-center justify-center text-2xl mb-6 group-hover:bg-orange-600 group-hover:text-white transition shadow-sm">
+                        <i class="fa-solid fa-ghost"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-slate-800 mb-3">❌ Quy trình "Ẩn"</h3>
+                    <p class="text-slate-500 text-sm leading-relaxed">
+                        Mọi bí quyết nằm trong đầu nhân viên lâu năm. Nhân sự nghỉ việc là quy trình mất theo.
+                    </p>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="bg-white p-8 rounded-3xl border border-slate-100 shadow-sm hover:shadow-xl hover:-translate-y-1 transition duration-300 reveal group hover:border-brand-500" style="transition-delay: 200ms;">
+                    <div class="w-14 h-14 bg-slate-100 text-slate-600 rounded-2xl flex items-center justify-center text-2xl mb-6 group-hover:bg-slate-600 group-hover:text-white transition shadow-sm">
+                        <i class="fa-solid fa-server"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-slate-800 mb-3">❌ Nỗi sợ ERP</h3>
+                    <p class="text-slate-500 text-sm leading-relaxed">
+                        Mua phần mềm đắt tiền (Base, Odoo...) về nhưng nhân viên không dùng. Ngoài một đằng, phần mềm một nẻo.
+                    </p>
+                </div>
+
+                <!-- Card 4 -->
+                <div class="bg-white p-8 rounded-3xl border border-slate-100 shadow-sm hover:shadow-xl hover:-translate-y-1 transition duration-300 reveal group hover:border-brand-500" style="transition-delay: 300ms;">
+                    <div class="w-14 h-14 bg-blue-50 text-blue-600 rounded-2xl flex items-center justify-center text-2xl mb-6 group-hover:bg-blue-600 group-hover:text-white transition shadow-sm">
+                        <i class="fa-solid fa-fire-extinguisher"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-slate-800 mb-3">❌ Ông chủ "làm tất"</h3>
+                    <p class="text-slate-500 text-sm leading-relaxed">
+                        Bạn vẫn phải nhảy vào xử lý sự vụ hàng ngày (lính cứu hỏa) thay vì tập trung mở rộng thị trường.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- DIFFERENTIATION: The Quadrant (UPDATED CONTENT & COLORS) -->
+    <section id="differentiation" class="py-24 bg-white border-y border-slate-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 reveal">
+                <h2 class="text-3xl lg:text-4xl font-serif font-bold text-brand-900 mb-4 leading-tight">
+                    Tại sao bạn đã đi học nhiều, mua nhiều phần mềm <br class="hidden md:block"> mà vẫn thất bại?
+                </h2>
+                <p class="text-slate-500 max-w-2xl mx-auto">Sự thật về "khoảng trống" trên thị trường tư vấn vận hành.</p>
+            </div>
+
+            <div class="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+                
+                <!-- Content Left -->
+                <div class="reveal order-2 lg:order-1">
+                    <div class="space-y-8">
+                        <!-- Problem Side -->
+                        <div class="bg-slate-50 p-8 rounded-3xl border border-slate-200">
+                            <h3 class="font-bold text-slate-800 text-lg mb-4 flex items-center">
+                                <span class="w-2 h-6 bg-slate-400 rounded-full mr-3"></span>
+                                Vấn đề của thị trường:
+                            </h3>
+                            <ul class="space-y-4 text-slate-600 text-sm">
+                                <li class="flex items-start gap-3">
+                                    <i class="fa-solid fa-circle-xmark text-slate-400 mt-1 text-base"></i>
+                                    <span><strong>Các Chuyên gia Đào tạo:</strong> Cho bạn tư duy chiến lược rất hay, nhưng về nhà bạn không biết bắt đầu vẽ cái file Excel từ đâu.</span>
+                                </li>
+                                <li class="flex items-start gap-3">
+                                    <i class="fa-solid fa-circle-xmark text-slate-400 mt-1 text-base"></i>
+                                    <span><strong>Các đơn vị bán Phần mềm:</strong> Ép doanh nghiệp bạn uốn theo luồng cứng nhắc của họ. Thiếu linh hoạt và thiếu "Business Sense".</span>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <!-- Solution Side (Colors updated to CTA/Brand Green) -->
+                        <div class="bg-brand-50 p-8 rounded-3xl border border-brand-200 shadow-sm relative overflow-hidden">
+                            <div class="absolute top-0 right-0 w-24 h-24 bg-cta/10 rounded-bl-full"></div>
+                            <h3 class="font-bold text-brand-900 text-lg mb-4 flex items-center">
+                                <span class="w-2 h-6 bg-cta rounded-full mr-3"></span>
+                                Giải pháp BeeGrowth:
+                            </h3>
+                            <ul class="space-y-4 text-slate-700 text-sm">
+                                <li class="flex items-start gap-3">
+                                    <i class="fa-solid fa-circle-check text-brand-600 mt-1 text-base"></i>
+                                    <span><strong>Chúng tôi là "Kiến trúc sư":</strong> Đứng giữa Chiến lược và Công cụ.</span>
+                                </li>
+                                <li class="flex items-start gap-3">
+                                    <i class="fa-solid fa-circle-check text-brand-600 mt-1 text-base"></i>
+                                    <span><strong>The Translator:</strong> "Dịch" tư duy của bạn thành Quy trình E2E (End-to-End).</span>
+                                </li>
+                                <li class="flex items-start gap-3">
+                                    <i class="fa-solid fa-circle-check text-brand-600 mt-1 text-base"></i>
+                                    <span><strong>Thực tế:</strong> Xây dựng hệ thống trên nền tảng tinh gọn, chi phí thấp (Excel/Lark/No-code).</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quadrant Chart Visualization -->
+                <div class="order-1 lg:order-2">
+                    <div class="relative bg-white rounded-3xl shadow-[0_20px_60px_-15px_rgba(0,0,0,0.1)] border border-slate-100 h-[500px] w-full text-slate-800 reveal overflow-hidden">
+                        
+                        <!-- Grid Background -->
+                        <div class="absolute inset-0 quadrant-grid opacity-40"></div>
+                        
+                        <!-- Axis Labels -->
+                        <div class="absolute top-4 w-full text-center z-10">
+                            <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest bg-white/90 backdrop-blur px-3 py-1 rounded-full border border-slate-100 shadow-sm">
+                                Theory & Advice (Lý thuyết)
+                            </span>
+                        </div>
+                        <div class="absolute bottom-4 w-full text-center z-10">
+                            <span class="text-[10px] font-bold text-brand-900 uppercase tracking-widest bg-brand-50 px-3 py-1 rounded-full border border-brand-100 shadow-sm">
+                                Execution & Systems (Thực thi)
+                            </span>
+                        </div>
+                        
+                        <!-- Side Labels (Vertical Text) -->
+                        <div class="absolute left-4 top-1/2 -translate-y-1/2 -translate-x-1/2 -rotate-90 z-10 origin-center whitespace-nowrap">
+                            <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest bg-white/90 backdrop-blur px-3 py-1 rounded-full border border-slate-100">
+                                Tool Oriented (Công cụ)
+                            </span>
+                        </div>
+                        <div class="absolute right-4 top-1/2 -translate-y-1/2 translate-x-1/2 rotate-90 z-10 origin-center whitespace-nowrap">
+                            <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest bg-white/90 backdrop-blur px-3 py-1 rounded-full border border-slate-100">
+                                Strategy Oriented (Chiến lược)
+                            </span>
+                        </div>
+
+                        <!-- Axes Lines -->
+                        <div class="absolute top-12 bottom-12 left-1/2 w-[1px] bg-slate-300"></div> <!-- Trục Y -->
+                        <div class="absolute left-12 right-12 top-1/2 h-[1px] bg-slate-300"></div> <!-- Trục X -->
+
+                        <!-- === COMPETITOR GROUP 1: TRADITIONAL CONSULTANTS (Top Right) === -->
+                        <div class="absolute top-[15%] right-[15%] w-[120px] h-[120px]">
+                            <!-- Cluster of Dots -->
+                            <div class="absolute top-2 right-4 w-3 h-3 bg-slate-300 rounded-full opacity-60"></div>
+                            <div class="absolute top-6 right-8 w-4 h-4 bg-slate-300 rounded-full opacity-80"></div>
+                            <div class="absolute top-0 right-10 w-2 h-2 bg-slate-200 rounded-full opacity-50"></div>
+                            <div class="absolute top-8 right-2 w-3 h-3 bg-slate-300 rounded-full opacity-70"></div>
+                            
+                            <!-- Label -->
+                            <div class="absolute top-14 right-0 bg-white/80 backdrop-blur border border-slate-200 px-2 py-1 rounded shadow-sm">
+                                <span class="text-[10px] text-slate-500 font-semibold block whitespace-nowrap">Traditional Consultants</span>
+                            </div>
+                        </div>
+
+                        <!-- === COMPETITOR GROUP 2: SOFTWARE VENDORS (Bottom Left) === -->
+                        <div class="absolute bottom-[15%] left-[15%] w-[120px] h-[120px]">
+                            <!-- Cluster of Dots -->
+                            <div class="absolute bottom-2 left-4 w-3 h-3 bg-slate-300 rounded-full opacity-60"></div>
+                            <div class="absolute bottom-6 left-8 w-4 h-4 bg-slate-300 rounded-full opacity-80"></div>
+                            <div class="absolute bottom-0 left-10 w-2 h-2 bg-slate-200 rounded-full opacity-50"></div>
+                            <div class="absolute bottom-8 left-2 w-3 h-3 bg-slate-300 rounded-full opacity-70"></div>
+                            
+                            <!-- Label -->
+                            <div class="absolute bottom-14 left-0 bg-white/80 backdrop-blur border border-slate-200 px-2 py-1 rounded shadow-sm">
+                                <span class="text-[10px] text-slate-500 font-semibold block whitespace-nowrap">Software Vendors</span>
+                            </div>
+                        </div>
+                        
+                        <!-- === FREELANCERS (Bottom Left - Extreme) === -->
+                        <div class="absolute bottom-[10%] left-[5%] opacity-40">
+                             <div class="w-2 h-2 bg-slate-300 rounded-full"></div>
+                        </div>
+
+                        <!-- === BEEGROWTH (Sweet Spot) - Colors updated to CTA/Brand Green === -->
+                        <div class="absolute bottom-[30%] right-[30%] transform translate-x-1/2 translate-y-1/2 flex flex-col items-center z-20 group">
+                            <div class="relative flex items-center justify-center cursor-pointer">
+                                <!-- Hiệu ứng tỏa sáng (Green/CTA) -->
+                                <div class="absolute w-16 h-16 bg-cta/20 rounded-full animate-ping"></div>
+                                <div class="absolute w-8 h-8 bg-cta/30 rounded-full animate-pulse"></div>
+                                <!-- Điểm chính (CTA Color) -->
+                                <div class="w-5 h-5 bg-cta rounded-full border-2 border-white glow-point relative z-10 shadow-lg"></div>
+                            </div>
+                            
+                            <!-- Tooltip Label -->
+                            <div class="mt-4 bg-brand-900 text-white font-bold px-4 py-3 rounded-lg shadow-xl border border-brand-600 text-center min-w-[140px] transform transition-transform group-hover:-translate-y-1">
+                                BeeGrowth
+                                <div class="text-[10px] font-normal text-cta mt-0.5 tracking-wide uppercase border-t border-brand-600 pt-1 mt-1">
+                                    System Architects
+                                </div>
+                                <!-- Mũi tên trỏ lên -->
+                                <div class="absolute -top-1.5 left-1/2 -translate-x-1/2 w-3 h-3 bg-brand-900 rotate-45 border-l border-t border-brand-600"></div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- METHODOLOGY: 4 Steps -->
+    <section id="methodology" class="py-24 bg-brand-900 text-white rounded-t-4xl rounded-b-4xl mx-4 my-8 lg:mx-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 reveal">
+                <h2 class="text-3xl lg:text-4xl font-serif font-bold mb-6">
+                    Quy trình "May đo" hệ thống vận hành <span class="text-cta">trong 12 tuần</span>
+                </h2>
+                <p class="text-brand-100 max-w-2xl mx-auto text-lg">Chúng tôi biến sự hỗn loạn thành trật tự thông qua 4 giai đoạn bài bản.</p>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- Step 1 -->
+                <div class="relative p-8 bg-brand-900/50 rounded-3xl border border-brand-600 hover:border-cta/50 hover:bg-brand-900 transition duration-300 reveal group flex flex-col h-full">
+                    <div class="absolute -top-5 -left-5 w-12 h-12 bg-cta text-brand-900 font-bold rounded-2xl flex items-center justify-center shadow-lg text-xl">01</div>
+                    <div class="mb-6 mt-2 text-cta text-3xl"><i class="fa-solid fa-magnifying-glass-chart"></i></div>
+                    <h3 class="text-xl font-bold mb-3">Healthcheck <br><span class="text-sm font-normal text-brand-100">(Bắt Mạch)</span></h3>
+                    <!-- Removed h-20, added flex-grow to push footer down if needed, adjusted margins -->
+                    <p class="text-brand-100 text-sm mb-6 leading-relaxed flex-grow">Rà soát hiện trạng "As-Is". Tìm ra các điểm nghẽn (Bottlenecks) gây thất thoát tiền và thời gian.</p>
+                    <!-- Added mt-auto to align at bottom -->
+                    <div class="pt-4 border-t border-brand-600 text-xs text-cta/80 font-medium uppercase tracking-wide mt-auto">
+                        Output: Báo cáo chẩn đoán
+                    </div>
+                </div>
+
+                <!-- Step 2 -->
+                <div class="relative p-8 bg-brand-900/50 rounded-3xl border border-brand-600 hover:border-cta/50 hover:bg-brand-900 transition duration-300 reveal group flex flex-col h-full" style="transition-delay: 100ms;">
+                    <div class="absolute -top-5 -left-5 w-12 h-12 bg-slate-700 text-white font-bold rounded-2xl flex items-center justify-center shadow-lg group-hover:bg-cta group-hover:text-brand-900 transition text-xl">02</div>
+                    <div class="mb-6 mt-2 text-cta text-3xl"><i class="fa-regular fa-map"></i></div>
+                    <h3 class="text-xl font-bold mb-3">Roadmap & Design <br><span class="text-sm font-normal text-brand-100">(Vẽ Bản Đồ)</span></h3>
+                    <p class="text-brand-100 text-sm mb-6 leading-relaxed flex-grow">Thiết kế luồng quy trình mục tiêu "To-Be". Lựa chọn nền tảng công nghệ phù hợp (không vẽ vời phần mềm đắt tiền).</p>
+                    <div class="pt-4 border-t border-brand-600 text-xs text-cta/80 font-medium uppercase tracking-wide mt-auto">
+                        Output: Chiến lược vận hành
+                    </div>
+                </div>
+
+                <!-- Step 3 -->
+                <div class="relative p-8 bg-brand-900/50 rounded-3xl border border-brand-600 hover:border-cta/50 hover:bg-brand-900 transition duration-300 reveal group flex flex-col h-full" style="transition-delay: 200ms;">
+                    <div class="absolute -top-5 -left-5 w-12 h-12 bg-slate-700 text-white font-bold rounded-2xl flex items-center justify-center shadow-lg group-hover:bg-cta group-hover:text-brand-900 transition text-xl">03</div>
+                    <div class="mb-6 mt-2 text-cta text-3xl"><i class="fa-solid fa-gears"></i></div>
+                    <h3 class="text-xl font-bold mb-3">System Build <br><span class="text-sm font-normal text-brand-100">(Xây Hệ Thống)</span></h3>
+                    <p class="text-brand-100 text-sm mb-6 leading-relaxed flex-grow">Bước khác biệt nhất. Trực tiếp xây dựng Working Files/Dashboard (Kho, Tài chính, Sales...) để nhập liệu ngay.</p>
+                    <div class="pt-4 border-t border-brand-600 text-xs text-cta/80 font-medium uppercase tracking-wide mt-auto">
+                        Output: Bộ công cụ quản trị
+                    </div>
+                </div>
+
+                <!-- Step 4 -->
+                <div class="relative p-8 bg-brand-900/50 rounded-3xl border border-brand-600 hover:border-cta/50 hover:bg-brand-900 transition duration-300 reveal group flex flex-col h-full" style="transition-delay: 300ms;">
+                    <div class="absolute -top-5 -left-5 w-12 h-12 bg-slate-700 text-white font-bold rounded-2xl flex items-center justify-center shadow-lg group-hover:bg-cta group-hover:text-brand-900 transition text-xl">04</div>
+                    <div class="mb-6 mt-2 text-cta text-3xl"><i class="fa-solid fa-handshake-simple"></i></div>
+                    <h3 class="text-xl font-bold mb-3">Transfer <br><span class="text-sm font-normal text-brand-100">(Chuyển Giao)</span></h3>
+                    <p class="text-brand-100 text-sm mb-6 leading-relaxed flex-grow">Đào tạo nhân sự sử dụng. Theo dõi, tinh chỉnh (Fine-tune) cho đến khi hệ thống tự chạy trơn tru.</p>
+                    <div class="pt-4 border-t border-brand-600 text-xs text-cta/80 font-medium uppercase tracking-wide mt-auto">
+                        Output: Team tự vận hành
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- TIMELINE ROADMAP -->
+    <section class="py-24 bg-white">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 reveal">
+            <h2 class="text-2xl lg:text-3xl font-serif font-bold text-center text-slate-900 mb-12">
+                Timeline dự kiến cho một dự án Chuyển đổi
+            </h2>
+            
+            <div class="relative border-l-4 border-slate-100 ml-6 space-y-12">
+                <!-- Item 1 -->
+                <div class="relative pl-10">
+                    <div class="absolute -left-[11px] top-1 w-6 h-6 bg-brand-500 rounded-full border-4 border-white shadow-md"></div>
+                    <h4 class="font-bold text-xl text-slate-800">Tuần 1-2: Khảo sát & Healthcheck</h4>
+                    <p class="text-slate-500 text-base mt-2">Phỏng vấn nhân sự, đi thực tế cửa hàng, audit dữ liệu.</p>
+                </div>
+                <!-- Item 2 -->
+                <div class="relative pl-10">
+                    <div class="absolute -left-[11px] top-1 w-6 h-6 bg-slate-300 rounded-full border-4 border-white shadow-md"></div>
+                    <h4 class="font-bold text-xl text-slate-800">Tuần 3-6: Thiết kế & Xây dựng (Focus)</h4>
+                    <p class="text-slate-500 text-base mt-2">Giai đoạn tập trung cao độ. Xây dựng quy trình và bộ Working Files.</p>
+                </div>
+                <!-- Item 3 -->
+                <div class="relative pl-10">
+                    <div class="absolute -left-[11px] top-1 w-6 h-6 bg-slate-300 rounded-full border-4 border-white shadow-md"></div>
+                    <h4 class="font-bold text-xl text-slate-800">Tuần 7-8: Đào tạo & Chạy thử (Pilot)</h4>
+                    <p class="text-slate-500 text-base mt-2">Hướng dẫn nhân viên nhập liệu, sửa lỗi phát sinh ngay tại chỗ.</p>
+                </div>
+                <!-- Item 4 -->
+                <div class="relative pl-10">
+                    <div class="absolute -left-[11px] top-1 w-6 h-6 bg-brand-500 rounded-full border-4 border-white shadow-md"></div>
+                    <h4 class="font-bold text-xl text-slate-800">Tuần 9-12: Nghiệm thu & Tối ưu hóa</h4>
+                    <p class="text-slate-500 text-base mt-2">Đánh giá hiệu quả, bàn giao toàn bộ hệ thống cho chủ doanh nghiệp.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CASE STUDY -->
+    <section class="py-24 bg-brand-50">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 reveal">
+            <h2 class="text-3xl font-serif font-bold text-center text-brand-900 mb-12">
+                Kết quả thực tế thay vì lời hứa suông
+            </h2>
+
+            <div class="bg-white p-10 rounded-3xl shadow-lg border border-brand-100 flex flex-col md:flex-row gap-10 items-center">
+                <div class="w-full md:w-1/2">
+                    <h3 class="text-2xl font-bold text-slate-800 mb-2">Case Study: Brand Thời trang X</h3>
+                    <p class="text-slate-500 mb-6 font-medium">Doanh thu: 50 tỷ/năm | Chuỗi 8 cửa hàng</p>
+                    <p class="text-slate-600 text-lg leading-relaxed italic relative">
+                        <span class="text-4xl text-brand-200 absolute -top-4 -left-4">"</span>
+                        Trước khi làm việc với BeeGrowth, chúng tôi bị mất hàng liên tục mà không tìm ra nguyên nhân. Nhân viên kho và kế toán đổ lỗi cho nhau. Sau 3 tháng, mọi thứ minh bạch trên Dashboard.
+                    </p>
+                </div>
+                <div class="w-full md:w-1/2 grid grid-cols-2 gap-6">
+                    <div class="bg-slate-50 p-6 rounded-2xl text-center border border-slate-100">
+                        <p class="text-xs text-slate-500 uppercase tracking-wide mb-2 font-bold">Trước</p>
+                        <p class="text-red-600 font-bold text-xl">Lệch kho 15%</p>
+                        <p class="text-slate-400 text-xs mt-2">Đối soát chậm 7 ngày</p>
+                    </div>
+                    <div class="bg-brand-50 p-6 rounded-2xl text-center border border-brand-100">
+                        <p class="text-xs text-brand-600 uppercase tracking-wide mb-2 font-bold">Sau 3 tháng</p>
+                        <p class="text-brand-600 font-bold text-xl">Lệch kho < 2%</p>
+                        <p class="text-brand-900 text-xs mt-2">Đối soát tự động 24h</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- EXPERT PROFILE -->
+    <section id="expert" class="py-24 bg-white">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 reveal">
+                <h2 class="text-3xl font-serif font-bold text-brand-900">Tư duy của Chủ doanh nghiệp <br> Kỹ năng của Kiến trúc sư hệ thống</h2>
+            </div>
+            <div class="flex flex-col md:flex-row items-center gap-12 bg-slate-50 rounded-3xl p-10 md:p-14 border border-slate-100 reveal">
+                <div class="w-full md:w-1/3">
+                    <div class="relative mx-auto w-64 h-64 md:w-72 md:h-72">
+                        <div class="absolute inset-0 border-2 border-brand-400 rounded-full transform translate-x-3 translate-y-3"></div>
+                        <img src="https://ik.imagekit.io/TNConsultant/Beegrowth/Tuyet%20profile.jpg?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
+                             alt="Cao Ánh Tuyết Portrait" 
+                             class="rounded-full w-full h-full object-cover border-4 border-white shadow-xl relative z-10 grayscale hover:grayscale-0 transition duration-500">
+                    </div>
+                </div>
+                <div class="w-full md:w-2/3 text-center md:text-left">
+                    <h3 class="text-2xl font-bold text-slate-900 mb-1">Cao Ánh Tuyết</h3>
+                    <p class="text-brand-600 font-bold mb-8 text-lg">Founder BeeGrowth</p>
+                    
+                    <div class="space-y-6 text-slate-600 leading-relaxed mb-8 text-lg">
+                        <p>
+                            <i class="fa-solid fa-quote-left text-brand-400 mr-2"></i>
+                            14 năm thực chiến trong lĩnh vực Retail & Fashion tại Việt Nam. Không phải lý thuyết suông, tôi là người trực tiếp vận hành, trải qua những "nỗi đau" mất hàng, lệch dòng tiền như bạn.
+                        </p>
+                        <p>
+                            Tôi sở hữu năng lực <strong>"The Translator" (Người Dịch Thuật)</strong>: Kết nối ngôn ngữ kinh doanh bay bổng của CEO với ngôn ngữ kỹ thuật, logic của hệ thống quản trị.
+                        </p>
+                    </div>
+                    
+                    <div class="bg-white p-6 rounded-2xl border-l-4 border-brand-500 shadow-sm inline-block">
+                        <p class="text-slate-800 font-medium italic">"Quy trình sinh ra là để phục vụ kinh doanh, không phải để làm khó nhân viên."</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="py-24 bg-white border-t border-slate-100">
+        <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 reveal">
+            <h2 class="text-2xl font-serif font-bold text-center mb-12 text-brand-900">Câu hỏi thường gặp</h2>
+            <div class="space-y-8">
+                <!-- Q1 -->
+                <div class="bg-slate-50 p-6 rounded-2xl border border-slate-100">
+                    <h4 class="font-bold text-slate-800 text-lg mb-3 flex items-center gap-3">
+                        <i class="fa-solid fa-circle-question text-brand-500 text-xl"></i>
+                        BeeGrowth có bán phần mềm không?
+                    </h4>
+                    <p class="text-slate-600 pl-8 leading-relaxed">Không. Chúng tôi thiết kế giải pháp trên nền tảng phù hợp nhất với quy mô của bạn (Excel/Lark/Base...). Chúng tôi đứng về phía bạn để chọn công cụ, chứ không phải đại lý bán phần mềm.</p>
+                </div>
+                <!-- Q2 -->
+                <div class="bg-slate-50 p-6 rounded-2xl border border-slate-100">
+                    <h4 class="font-bold text-slate-800 text-lg mb-3 flex items-center gap-3">
+                        <i class="fa-solid fa-circle-question text-brand-500 text-xl"></i>
+                        Chi phí tính thế nào?
+                    </h4>
+                    <p class="text-slate-600 pl-8 leading-relaxed">Chúng tôi tính phí theo Dự án (Project-based) với kết quả đầu ra cụ thể (Bộ quy trình, Hệ thống báo cáo...), không tính theo giờ tư vấn. Bạn biết chính xác mình bỏ ra bao nhiêu và nhận lại cái gì.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FINAL CTA -->
+    <section id="contact" class="py-24 bg-brand-900 text-white relative overflow-hidden rounded-t-[3rem] -mb-1">
+        <!-- Decor -->
+        <div class="absolute top-0 right-0 w-80 h-80 bg-cta/10 rounded-full blur-3xl"></div>
+        <div class="absolute bottom-0 left-0 w-80 h-80 bg-white/5 rounded-full blur-3xl"></div>
+
+        <div class="max-w-4xl mx-auto px-4 text-center reveal relative z-10">
+            <h2 class="text-4xl lg:text-5xl font-serif font-bold mb-10">
+                Đã đến lúc Doanh nghiệp cần một <br> <span class="text-cta">"Hệ điều hành"</span> mới.
+            </h2>
+            
+            <div class="bg-white p-10 rounded-3xl shadow-2xl max-w-lg mx-auto transform hover:-translate-y-1 transition duration-300">
+                <h3 class="text-2xl font-bold text-slate-800 mb-8">Đăng ký Audit 1:1 ngay</h3>
+                
+                <form class="space-y-5 text-left">
+                    <div>
+                        <label class="block text-sm font-medium text-slate-700 mb-1.5">Họ tên</label>
+                        <input type="text" class="w-full px-5 py-3.5 rounded-xl border border-slate-300 focus:border-brand-500 focus:ring-1 focus:ring-brand-500 outline-none transition text-slate-800 bg-slate-50" placeholder="Ví dụ: Nguyễn Văn A">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-slate-700 mb-1.5">Số điện thoại / Zalo</label>
+                        <input type="tel" class="w-full px-5 py-3.5 rounded-xl border border-slate-300 focus:border-brand-500 focus:ring-1 focus:ring-brand-500 outline-none transition text-slate-800 bg-slate-50" placeholder="0909 xxx xxx">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-slate-700 mb-1.5">Vấn đề lớn nhất đang gặp phải</label>
+                        <textarea rows="3" class="w-full px-5 py-3.5 rounded-xl border border-slate-300 focus:border-brand-500 focus:ring-1 focus:ring-brand-500 outline-none transition text-slate-800 bg-slate-50" placeholder="Ví dụ: Lệch kho, Nhân viên làm sai quy trình..."></textarea>
+                    </div>
+                    <button type="button" class="w-full py-4 bg-cta text-brand-900 font-bold rounded-full hover:bg-cta-hover transition text-lg shadow-xl shadow-cta/20 mt-4">
+                        Gửi yêu cầu ngay <i class="fa-solid fa-arrow-right ml-2"></i>
+                    </button>
+                </form>
+                <p class="text-xs text-slate-400 mt-6 text-center">Cam kết bảo mật 100% thông tin doanh nghiệp.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="bg-slate-50 border-t border-slate-200 py-12">
+        <div class="max-w-7xl mx-auto px-4 text-center text-slate-500">
+            <div class="flex justify-center items-center gap-2 mb-6">
+                <!-- Inserted BeeGrowth Full Color Logo in Footer -->
+                <img src="https://ik.imagekit.io/TNConsultant/Beegrowth/BEEGROWTH%20LOGO-1.png" alt="BeeGrowth Logo" class="h-12 w-auto object-contain">
+            </div>
+            <p class="mb-8 font-medium">Đối tác tư vấn vận hành thực chiến cho SME Bán lẻ Việt Nam.</p>
+            <div class="flex justify-center gap-8 mb-8">
+                <a href="#" class="text-slate-400 hover:text-brand-600 transition hover:scale-110 transform"><i class="fa-brands fa-linkedin text-2xl"></i></a>
+                <a href="#" class="text-slate-400 hover:text-brand-600 transition hover:scale-110 transform"><i class="fa-brands fa-facebook text-2xl"></i></a>
+                <a href="#" class="text-slate-400 hover:text-brand-600 transition hover:scale-110 transform"><i class="fa-solid fa-envelope text-2xl"></i></a>
+            </div>
+            <p class="text-sm text-slate-400">&copy; 2024 BeeGrowth. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- SCRIPT FOR ANIMATIONS -->
+    <script>
+        // Reveal on Scroll
+        function reveal() {
+            var reveals = document.querySelectorAll(".reveal");
+            for (var i = 0; i < reveals.length; i++) {
+                var windowHeight = window.innerHeight;
+                var elementTop = reveals[i].getBoundingClientRect().top;
+                var elementVisible = 100;
+                if (elementTop < windowHeight - elementVisible) {
+                    reveals[i].classList.add("active");
+                }
+            }
+        }
+        window.addEventListener("scroll", reveal);
+        // Trigger once on load
+        reveal();
+
+        // Mobile Menu Toggle
+        const btn = document.querySelector("button.mobile-menu-button");
+        const menu = document.querySelector(".mobile-menu");
+
+        btn.addEventListener("click", () => {
+            menu.classList.toggle("hidden");
+        });
+    </script>
+</body>
+</html>
