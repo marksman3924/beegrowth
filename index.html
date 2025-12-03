@@ -22,7 +22,6 @@
             theme: {
                 extend: {
                     colors: {
-                        // REVERTED TO ORIGINAL PALETTE (LIME & DARK GREEN)
                         brand: {
                             50: '#f2f8f6',
                             100: '#dbece6',
@@ -92,27 +91,17 @@
             text-wrap: balance;
         }
         
-        .badge-text {
-            white-space: nowrap;
-        }
-
-        /* GIF CONTAINER STYLE */
-        .gif-container img {
-            max-width: 100%;
-            height: auto;
-            border-radius: 1.5rem;
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-        }
-
-        /* SLIDER 3D CAROUSEL STYLES */
+        /* SLIDER 3D CAROUSEL STYLES (DESKTOP ONLY) */
         #carousel-container {
-            perspective: 1200px; /* Increased perspective for deeper 3D */
+            perspective: 1200px; 
             overflow: hidden; 
+            position: relative;
+            /* Height is handled by .carousel-track inside */
         }
         
         .carousel-track {
             position: relative;
-            height: 500px;
+            height: 500px; /* Base height */
             width: 100%;
             display: flex;
             justify-content: center;
@@ -121,13 +110,13 @@
         
         @media (min-width: 768px) {
             .carousel-track {
-                height: 600px;
+                height: 600px; /* Desktop height */
             }
         }
 
         .slide {
             position: absolute;
-            width: 75%; /* Mobile width */
+            width: 75%;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
@@ -141,17 +130,15 @@
 
         @media (min-width: 768px) {
             .slide {
-                width: 50%; /* Desktop width */
+                width: 50%; /* Desktop width 50% */
             }
         }
 
-        /* UPDATED SLIDE STATES FOR LARGER CENTER IMAGE */
+        /* SLIDE STATES */
         .slide.active {
             opacity: 1;
             z-index: 30;
-            /* Scale up slightly to emphasize */
             transform: translate(-50%, -50%) scale(1.1); 
-            /* Border removed as requested, shadow kept */
             border: none;
             box-shadow: 0 30px 60px -10px rgba(0, 0, 0, 0.4);
         }
@@ -159,7 +146,6 @@
         .slide.prev {
             opacity: 0.5;
             z-index: 10;
-            /* Move left and scale down significantly */
             transform: translate(-130%, -50%) scale(0.65) !important;
             filter: blur(2px) grayscale(30%);
         }
@@ -167,7 +153,6 @@
         .slide.next {
             opacity: 0.5;
             z-index: 10;
-            /* Move right and scale down significantly */
             transform: translate(30%, -50%) scale(0.65) !important;
             filter: blur(2px) grayscale(30%);
         }
@@ -185,11 +170,11 @@
             top: 1rem;
             left: 1rem;
             background-color: rgba(255, 255, 255, 0.95);
-            color: #0b3224; /* brand-900 */
+            color: #0b3224; 
             font-weight: 700;
             padding: 0.5rem 1rem;
-            border-radius: 9999px; /* rounded-full */
-            font-size: 0.75rem; /* text-xs */
+            border-radius: 9999px;
+            font-size: 0.75rem;
             text-transform: uppercase;
             letter-spacing: 0.05em;
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
@@ -197,7 +182,7 @@
             border: 1px solid #e2e8f0;
         }
 
-        /* Description Box */
+        /* Description Box (Desktop) */
         .description-box {
             position: absolute;
             bottom: 0;
@@ -206,21 +191,23 @@
             background: linear-gradient(to top, rgba(11, 50, 36, 0.98) 0%, rgba(11, 50, 36, 0.85) 100%);
             color: white;
             padding: 1.5rem;
-            transform: translateY(100%); /* Hidden by default */
+            transform: translateY(100%);
             transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
             z-index: 30;
             backdrop-filter: blur(4px);
         }
 
         .slide:hover .description-box {
-            transform: translateY(0); /* Show on hover */
+            transform: translateY(0);
         }
-        
-        /* Always show description on mobile active slide for better UX */
-        @media (hover: none) {
-            .slide.active .description-box {
-                transform: translateY(0);
-            }
+
+        /* Hide scrollbar for mobile slider */
+        .scrollbar-hide::-webkit-scrollbar {
+            display: none;
+        }
+        .scrollbar-hide {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
         }
     </style>
 </head>
@@ -230,24 +217,20 @@
     <nav class="fixed w-full z-50 bg-white/95 backdrop-blur-sm border-b border-slate-200 transition-all duration-300 shadow-sm rounded-b-3xl" id="navbar">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-22 py-4 items-center">
-                <!-- Logo -->
                 <div class="flex-shrink-0 flex items-center gap-2 cursor-pointer" onclick="window.scrollTo(0,0)">
                     <img src="https://ik.imagekit.io/TNConsultant/Beegrowth/BEEGROWTH%20LOGO-1.png" alt="BeeGrowth Logo" class="h-10 md:h-14 w-auto object-contain">
                 </div>
 
-                <!-- Desktop Menu -->
                 <div class="hidden md:flex space-x-8 items-center">
                     <a href="#problem" class="text-slate-600 hover:text-brand-600 font-medium transition">Thách Thức</a>
                     <a href="#differentiation" class="text-slate-600 hover:text-brand-600 font-medium transition">Vị Thế</a>
                     <a href="#methodology" class="text-slate-600 hover:text-brand-600 font-medium transition">Giải Pháp</a>
                     <a href="#expert" class="text-slate-600 hover:text-brand-600 font-medium transition">Expert</a>
-                    <!-- CTA Button: Lime Green + Dark Text -->
                     <a href="#contact" class="px-6 py-3 bg-cta text-brand-900 font-bold rounded-full hover:bg-cta-hover transition shadow-lg shadow-cta/30 transform hover:-translate-y-0.5 border border-transparent hover:border-cta-hover">
                         Đăng ký Khảo sát
                     </a>
                 </div>
 
-                <!-- Mobile Menu Button -->
                 <div class="md:hidden flex items-center">
                     <button class="mobile-menu-button text-slate-600 hover:text-brand-600 focus:outline-none p-2">
                         <i class="fa-solid fa-bars text-2xl"></i>
@@ -255,7 +238,6 @@
                 </div>
             </div>
         </div>
-        <!-- Mobile Menu -->
         <div class="hidden mobile-menu md:hidden bg-white border-t border-slate-100 shadow-lg absolute w-full rounded-b-3xl">
             <a href="#problem" class="block py-3 px-6 text-sm hover:bg-slate-50 text-slate-700 font-medium">Thách Thức</a>
             <a href="#differentiation" class="block py-3 px-6 text-sm hover:bg-slate-50 text-slate-700 font-medium">Vị Thế</a>
@@ -270,13 +252,11 @@
     <section class="relative pt-36 pb-20 lg:pt-48 lg:pb-32 hero-pattern overflow-hidden">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <div class="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-                <!-- Text Content -->
                 <div class="reveal active">
                     <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-brand-50 border border-brand-100 text-brand-900 text-xs font-bold tracking-wider uppercase mb-8 shadow-sm">
                         <span class="w-2 h-2 rounded-full bg-brand-500 animate-pulse"></span>
                         Định vị Chuyên gia Retail & Fashion
                     </div>
-                    <!-- Headline with Lime/Green accents -->
                     <h1 class="text-4xl lg:text-5xl font-serif font-bold text-slate-900 leading-relaxed mb-6">
                         Kiến tạo Hệ thống Vận hành Bền vững & <span class="relative inline-block text-brand-600">Số hóa Thực chiến<span class="absolute bottom-1 left-0 w-full h-3 bg-cta/40 -z-10 transform -rotate-1 rounded-full"></span></span> cho Doanh nghiệp Bán lẻ.
                     </h1>
@@ -285,7 +265,6 @@
                     </p>
                     
                     <div class="flex flex-col sm:flex-start gap-4">
-                        <!-- CTA Button: Lime Green + Dark Text -->
                         <a href="#contact" class="inline-flex justify-center items-center px-10 py-4 bg-cta text-brand-900 font-bold rounded-full hover:bg-cta-hover transition shadow-xl shadow-cta/40 text-lg transform hover:-translate-y-1">
                             Đăng ký Khảo sát
                         </a>
@@ -293,19 +272,15 @@
                     </div>
                 </div>
 
-                <!-- Hero Image -->
                 <div class="relative reveal">
-                    <!-- Background blobs (Lime/Green) -->
                     <div class="absolute -top-10 -right-10 w-72 h-72 bg-cta/20 rounded-full blur-3xl opacity-60"></div>
                     <div class="absolute -bottom-10 -left-10 w-64 h-64 bg-slate-200 rounded-full blur-3xl opacity-60"></div>
                     
-                    <!-- Main Image Frame -->
                     <div class="relative rounded-3xl overflow-hidden shadow-2xl border-4 border-white transform rotate-2 hover:rotate-0 transition duration-500 group">
                         <img src="https://images.unsplash.com/photo-1531403009284-440f080d1e12?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" 
                              alt="Consultant planning flowchart on whiteboard" 
                              class="w-full h-[400px] md:h-[500px] object-cover object-center group-hover:scale-105 transition duration-700 grayscale hover:grayscale-0">
                         
-                        <!-- Floating Badge -->
                         <div class="absolute bottom-6 left-6 right-6 bg-white/95 backdrop-blur p-5 rounded-3xl shadow-lg border border-slate-100">
                             <div class="flex items-start gap-4">
                                 <div class="w-12 h-12 rounded-full bg-brand-100 flex items-center justify-center text-brand-600 text-xl shrink-0">
@@ -327,7 +302,6 @@
     <section id="problem" class="py-24 bg-brand-50/50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center max-w-3xl mx-auto mb-16 reveal">
-                <!-- UPDATED: Fixed cut-off by removing nowrap on mobile, and shortened subheader -->
                 <h2 class="text-3xl lg:text-4xl font-serif font-bold text-brand-900 mb-6 leading-loose">
                     Khi quy mô mở rộng, mô hình <br class="hidden md:block"> 
                     <span class="text-red-600 bg-red-50 px-4 py-1 rounded-full inline-block mt-2 md:mt-0">quản trị cũ liệu còn phù hợp?</span>
@@ -338,7 +312,6 @@
             </div>
 
             <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-                <!-- Card 1: Red -->
                 <div class="bg-white p-8 rounded-3xl border border-slate-100 shadow-sm hover:shadow-xl hover:-translate-y-1 transition duration-300 reveal group hover:border-brand-500">
                     <div class="w-14 h-14 bg-red-50 text-red-600 rounded-2xl flex items-center justify-center text-2xl mb-6 group-hover:bg-red-600 group-hover:text-white transition shadow-sm">
                         <i class="fa-solid fa-chart-line"></i>
@@ -348,8 +321,6 @@
                         Việc quản trị dựa trên trực giác thay vì dữ liệu thời gian thực (Real-time data) dẫn đến rủi ro trong kiểm soát dòng tiền.
                     </p>
                 </div>
-
-                <!-- Card 2: Orange -->
                 <div class="bg-white p-8 rounded-3xl border border-slate-100 shadow-sm hover:shadow-xl hover:-translate-y-1 transition duration-300 reveal group hover:border-brand-500" style="transition-delay: 100ms;">
                     <div class="w-14 h-14 bg-orange-50 text-orange-600 rounded-2xl flex items-center justify-center text-2xl mb-6 group-hover:bg-orange-600 group-hover:text-white transition shadow-sm">
                         <i class="fa-solid fa-user-lock"></i>
@@ -359,8 +330,6 @@
                         Quy trình vận hành phụ thuộc vào kinh nghiệm cá nhân của nhân sự (Tacit Knowledge), thiếu tính kế thừa.
                     </p>
                 </div>
-
-                <!-- Card 3: Slate -->
                 <div class="bg-white p-8 rounded-3xl border border-slate-100 shadow-sm hover:shadow-xl hover:-translate-y-1 transition duration-300 reveal group hover:border-brand-500" style="transition-delay: 200ms;">
                     <div class="w-14 h-14 bg-slate-100 text-slate-600 rounded-2xl flex items-center justify-center text-2xl mb-6 group-hover:bg-slate-600 group-hover:text-white transition shadow-sm">
                         <i class="fa-solid fa-link-slash"></i>
@@ -370,8 +339,6 @@
                         Đầu tư ERP/SaaS đắt đỏ nhưng tỷ lệ ứng dụng thấp do thiếu sự tương thích với quy trình nghiệp vụ.
                     </p>
                 </div>
-
-                <!-- Card 4: Blue -->
                 <div class="bg-white p-8 rounded-3xl border border-slate-100 shadow-sm hover:shadow-xl hover:-translate-y-1 transition duration-300 reveal group hover:border-brand-500" style="transition-delay: 300ms;">
                     <div class="w-14 h-14 bg-blue-50 text-blue-600 rounded-2xl flex items-center justify-center text-2xl mb-6 group-hover:bg-blue-600 group-hover:text-white transition shadow-sm">
                         <i class="fa-solid fa-user-tie"></i>
@@ -385,10 +352,9 @@
         </div>
     </section>
 
-    <!-- DIFFERENTIATION: The Strategic Fit -->
+    <!-- DIFFERENTIATION -->
     <section id="differentiation" class="py-24 bg-white border-y border-slate-50">
         <div class="max-w-7xl mx-auto px-6 lg:px-8">
-            
             <div class="text-center mb-20 reveal">
                 <span class="text-brand-600 font-semibold tracking-widest text-xs uppercase mb-3 block">Market Landscape</span>
                 <h2 class="text-3xl lg:text-5xl font-serif font-bold text-slate-900 mb-6 leading-relaxed">
@@ -398,114 +364,53 @@
                     Giữa tư duy chiến lược và công cụ công nghệ, doanh nghiệp cần một "Kiến trúc sư" để hiện thực hóa các mục tiêu tăng trưởng thành hệ thống vận hành bền vững.
                 </p>
             </div>
-
             <div class="grid lg:grid-cols-2 gap-16 lg:gap-24 items-center">
-                
-                <!-- Content Left -->
                 <div class="reveal order-2 lg:order-1">
                     <div class="space-y-10">
                         <div class="relative pl-8 border-l border-slate-200">
                             <h3 class="font-serif font-bold text-slate-800 text-xl mb-4">Khoảng trống của Thị trường:</h3>
                             <div class="space-y-5">
                                 <div class="group">
-                                    <h4 class="font-semibold text-slate-700 mb-1 flex items-center">
-                                        Strategic Advisory (Tư vấn Chiến lược)
-                                    </h4>
-                                    <p class="text-slate-500 text-sm leading-relaxed">
-                                        Cung cấp tầm nhìn và tư duy quản trị xuất sắc, nhưng thường dừng lại ở mức định hướng, thiếu các công cụ thực thi (Execution Tools) chi tiết.
-                                    </p>
+                                    <h4 class="font-semibold text-slate-700 mb-1 flex items-center">Strategic Advisory (Tư vấn Chiến lược)</h4>
+                                    <p class="text-slate-500 text-sm leading-relaxed">Cung cấp tầm nhìn và tư duy quản trị xuất sắc, nhưng thường dừng lại ở mức định hướng, thiếu các công cụ thực thi (Execution Tools) chi tiết.</p>
                                 </div>
                                 <div class="group">
-                                    <h4 class="font-semibold text-slate-700 mb-1 flex items-center">
-                                        Technology Providers (Đối tác Công nghệ)
-                                    </h4>
-                                    <p class="text-slate-500 text-sm leading-relaxed">
-                                        Cung cấp nền tảng mạnh mẽ (ERP, SaaS), nhưng yêu cầu doanh nghiệp phải chuẩn hóa quy trình theo phần mềm, thiếu tính linh hoạt đặc thù ngành.
-                                    </p>
+                                    <h4 class="font-semibold text-slate-700 mb-1 flex items-center">Technology Providers (Đối tác Công nghệ)</h4>
+                                    <p class="text-slate-500 text-sm leading-relaxed">Cung cấp nền tảng mạnh mẽ (ERP, SaaS), nhưng yêu cầu doanh nghiệp phải chuẩn hóa quy trình theo phần mềm, thiếu tính linh hoạt đặc thù ngành.</p>
                                 </div>
                             </div>
                         </div>
-
-                        <!-- BeeGrowth Value Proposition -->
                         <div class="bg-brand-50 p-8 rounded-2xl border border-brand-100 relative">
-                            <h3 class="font-serif font-bold text-brand-900 text-xl mb-4 flex items-center">
-                                <i class="fa-solid fa-layer-group mr-3 text-brand-500"></i>
-                                Vị thế của BeeGrowth:
-                            </h3>
+                            <h3 class="font-serif font-bold text-brand-900 text-xl mb-4 flex items-center"><i class="fa-solid fa-layer-group mr-3 text-brand-500"></i>Vị thế của BeeGrowth:</h3>
                             <ul class="space-y-4 text-slate-700 text-sm">
-                                <li class="flex items-start gap-3">
-                                    <i class="fa-solid fa-check text-brand-500 mt-1"></i>
-                                    <span><strong>The Operational Architect:</strong> Chúng tôi đứng ở vị trí giao thoa, thiết kế kiến trúc vận hành kết nối Chiến lược với Công cụ.</span>
-                                </li>
-                                <li class="flex items-start gap-3">
-                                    <i class="fa-solid fa-check text-brand-500 mt-1"></i>
-                                    <span><strong>The Translator (Người chuyển ngữ):</strong> Chuyển hóa mục tiêu kinh doanh của Ban lãnh đạo thành quy trình nghiệp vụ (E2E Process) mạch lạc.</span>
-                                </li>
-                                <li class="flex items-start gap-3">
-                                    <i class="fa-solid fa-check text-brand-500 mt-1"></i>
-                                    <span><strong>Pragmatic Implementation:</strong> Xây dựng hệ thống "may đo" trên nền tảng tối ưu chi phí (Excel/Lark/No-code), đảm bảo tính ứng dụng cao.</span>
-                                </li>
+                                <li class="flex items-start gap-3"><i class="fa-solid fa-check text-brand-500 mt-1"></i><span><strong>The Operational Architect:</strong> Chúng tôi đứng ở vị trí giao thoa, thiết kế kiến trúc vận hành kết nối Chiến lược với Công cụ.</span></li>
+                                <li class="flex items-start gap-3"><i class="fa-solid fa-check text-brand-500 mt-1"></i><span><strong>The Translator (Người chuyển ngữ):</strong> Chuyển hóa mục tiêu kinh doanh của Ban lãnh đạo thành quy trình nghiệp vụ (E2E Process) mạch lạc.</span></li>
+                                <li class="flex items-start gap-3"><i class="fa-solid fa-check text-brand-500 mt-1"></i><span><strong>Pragmatic Implementation:</strong> Xây dựng hệ thống "may đo" trên nền tảng tối ưu chi phí (Excel/Lark/No-code), đảm bảo tính ứng dụng cao.</span></li>
                             </ul>
                         </div>
                     </div>
                 </div>
-
-                <!-- Quadrant Chart Visualization -->
                 <div class="order-1 lg:order-2">
                     <div class="relative bg-white rounded-xl shadow-[0_30px_60px_-15px_rgba(0,0,0,0.08)] border border-slate-100 h-[500px] md:h-[550px] w-full text-slate-800 reveal overflow-hidden">
-                        
-                        <!-- Grid Background -->
                         <div class="absolute inset-0 quadrant-grid opacity-30"></div>
-                        
-                        <!-- Axis Labels -->
-                        <div class="absolute top-6 w-full text-center z-10">
-                            <span class="text-[10px] font-semibold text-slate-400 uppercase tracking-widest bg-white/90 backdrop-blur px-4 py-1.5 rounded-full border border-slate-100 shadow-sm">
-                                Advisory & Strategy (Tư vấn & Chiến lược)
-                            </span>
-                        </div>
-                        <div class="absolute bottom-6 w-full text-center z-10">
-                            <span class="text-[10px] font-bold text-brand-800 uppercase tracking-widest bg-brand-50 px-4 py-1.5 rounded-full border border-brand-100 shadow-sm">
-                                Execution & Systems (Thực thi & Hệ thống)
-                            </span>
-                        </div>
-                        
-                        <!-- Side Labels -->
-                        <div class="absolute left-6 top-1/2 -translate-y-1/2 -translate-x-1/2 -rotate-90 z-10 origin-center whitespace-nowrap">
-                            <span class="text-[10px] font-semibold text-slate-400 uppercase tracking-widest bg-white/90 backdrop-blur px-4 py-1.5 rounded-full border border-slate-100">
-                                Tool Oriented (Thiên về Công cụ)
-                            </span>
-                        </div>
-                        <div class="absolute right-6 top-1/2 -translate-y-1/2 translate-x-1/2 rotate-90 z-10 origin-center whitespace-nowrap">
-                            <span class="text-[10px] font-semibold text-slate-400 uppercase tracking-widest bg-white/90 backdrop-blur px-4 py-1.5 rounded-full border border-slate-100">
-                                People & Management (Thiên về Quản trị)
-                            </span>
-                        </div>
-
-                        <!-- Axes Lines -->
+                        <div class="absolute top-6 w-full text-center z-10"><span class="text-[10px] font-semibold text-slate-400 uppercase tracking-widest bg-white/90 backdrop-blur px-4 py-1.5 rounded-full border border-slate-100 shadow-sm">Advisory & Strategy (Tư vấn & Chiến lược)</span></div>
+                        <div class="absolute bottom-6 w-full text-center z-10"><span class="text-[10px] font-bold text-brand-800 uppercase tracking-widest bg-brand-50 px-4 py-1.5 rounded-full border border-brand-100 shadow-sm">Execution & Systems (Thực thi & Hệ thống)</span></div>
+                        <div class="absolute left-6 top-1/2 -translate-y-1/2 -translate-x-1/2 -rotate-90 z-10 origin-center whitespace-nowrap"><span class="text-[10px] font-semibold text-slate-400 uppercase tracking-widest bg-white/90 backdrop-blur px-4 py-1.5 rounded-full border border-slate-100">Tool Oriented (Thiên về Công cụ)</span></div>
+                        <div class="absolute right-6 top-1/2 -translate-y-1/2 translate-x-1/2 rotate-90 z-10 origin-center whitespace-nowrap"><span class="text-[10px] font-semibold text-slate-400 uppercase tracking-widest bg-white/90 backdrop-blur px-4 py-1.5 rounded-full border border-slate-100">People & Management (Thiên về Quản trị)</span></div>
                         <div class="absolute top-16 bottom-16 left-1/2 w-[1px] bg-slate-200"></div>
                         <div class="absolute left-16 right-16 top-1/2 h-[1px] bg-slate-200"></div>
-
-                        <!-- Competitor Group 1 -->
                         <div class="absolute top-[18%] right-[18%] w-[120px] h-[120px]">
                             <div class="absolute top-2 right-4 w-3 h-3 bg-slate-200 rounded-full opacity-80"></div>
                             <div class="absolute top-6 right-8 w-4 h-4 bg-slate-300 rounded-full opacity-90"></div>
                             <div class="absolute top-0 right-10 w-2 h-2 bg-slate-200 rounded-full opacity-60"></div>
-                            <div class="absolute top-14 right-0 bg-white/90 backdrop-blur border border-slate-100 px-3 py-1.5 rounded-lg shadow-sm">
-                                <span class="text-[10px] text-slate-500 font-medium block whitespace-nowrap">Strategic Advisors</span>
-                            </div>
+                            <div class="absolute top-14 right-0 bg-white/90 backdrop-blur border border-slate-100 px-3 py-1.5 rounded-lg shadow-sm"><span class="text-[10px] text-slate-500 font-medium block whitespace-nowrap">Strategic Advisors</span></div>
                         </div>
-
-                        <!-- Competitor Group 2 -->
                         <div class="absolute bottom-[18%] left-[18%] w-[120px] h-[120px]">
                             <div class="absolute bottom-2 left-4 w-3 h-3 bg-slate-200 rounded-full opacity-80"></div>
                             <div class="absolute bottom-6 left-8 w-4 h-4 bg-slate-300 rounded-full opacity-90"></div>
                             <div class="absolute bottom-0 left-10 w-2 h-2 bg-slate-200 rounded-full opacity-60"></div>
-                            <div class="absolute bottom-14 left-0 bg-white/90 backdrop-blur border border-slate-100 px-3 py-1.5 rounded-lg shadow-sm">
-                                <span class="text-[10px] text-slate-500 font-medium block whitespace-nowrap">Tech Vendors</span>
-                            </div>
+                            <div class="absolute bottom-14 left-0 bg-white/90 backdrop-blur border border-slate-100 px-3 py-1.5 rounded-lg shadow-sm"><span class="text-[10px] text-slate-500 font-medium block whitespace-nowrap">Tech Vendors</span></div>
                         </div>
-
-                        <!-- BeeGrowth Sweet Spot -->
                         <div class="absolute bottom-[30%] right-[30%] transform translate-x-1/2 translate-y-1/2 flex flex-col items-center z-20 group">
                             <div class="relative flex items-center justify-center cursor-pointer">
                                 <div class="absolute w-20 h-20 bg-cta/20 rounded-full animate-ping"></div>
@@ -514,13 +419,10 @@
                             </div>
                             <div class="mt-5 bg-slate-800 text-white font-medium px-5 py-3 rounded-lg shadow-xl shadow-slate-200/50 border border-slate-700 text-center min-w-[150px] transform transition-all duration-300 group-hover:-translate-y-1">
                                 <span class="block font-serif text-sm tracking-wide">BeeGrowth</span>
-                                <div class="text-[10px] font-sans font-light text-cta mt-1 uppercase border-t border-slate-600 pt-1 tracking-wider">
-                                    Operational Architect
-                                </div>
+                                <div class="text-[10px] font-sans font-light text-cta mt-1 uppercase border-t border-slate-600 pt-1 tracking-wider">Operational Architect</div>
                                 <div class="absolute -top-1.5 left-1/2 -translate-x-1/2 w-3 h-3 bg-slate-800 rotate-45 border-l border-t border-slate-700"></div>
                             </div>
                         </div>
-
                     </div>
                 </div>
             </div>
@@ -531,123 +433,116 @@
     <section id="methodology" class="py-24 bg-brand-900 text-white rounded-t-4xl rounded-b-4xl mx-4 my-8 lg:mx-8">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-16 reveal">
-                <h2 class="text-3xl lg:text-4xl font-serif font-bold mb-6">
-                    Khung năng lực triển khai toàn diện
-                </h2>
+                <h2 class="text-3xl lg:text-4xl font-serif font-bold mb-6">Khung năng lực triển khai toàn diện</h2>
                 <p class="text-brand-100 max-w-2xl mx-auto text-lg">Chúng tôi biến sự hỗn loạn thành trật tự thông qua 4 giai đoạn bài bản.</p>
             </div>
-
             <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-                <!-- Step 1 -->
                 <div class="relative p-8 bg-brand-900/50 rounded-3xl border border-brand-600 hover:border-cta/50 hover:bg-brand-900 transition duration-300 reveal group flex flex-col h-full">
                     <div class="absolute -top-5 -left-5 w-12 h-12 bg-cta text-brand-900 font-bold rounded-2xl flex items-center justify-center shadow-lg text-xl">01</div>
                     <div class="mb-6 mt-2 text-cta text-3xl"><i class="fa-solid fa-stethoscope"></i></div>
                     <h3 class="text-xl font-bold mb-3">Diagnostic Audit <br><span class="text-sm font-normal text-brand-100">(Chẩn đoán Hiện trạng)</span></h3>
                     <p class="text-brand-100 text-sm mb-6 leading-relaxed flex-grow">Đánh giá sức khỏe doanh nghiệp, nhận diện <span class="whitespace-nowrap">điểm nghẽn (Bottlenecks)</span> và lãng phí trong chuỗi giá trị.</p>
-                    <div class="pt-5 border-t border-brand-600 text-xs text-cta/80 font-medium uppercase tracking-wide mt-auto min-h-[4.5rem]">
-                        Output: Báo cáo chẩn đoán
-                    </div>
+                    <div class="pt-5 border-t border-brand-600 text-xs text-cta/80 font-medium uppercase tracking-wide mt-auto min-h-[4.5rem]">Output: Báo cáo chẩn đoán</div>
                 </div>
-
-                <!-- Step 2 -->
                 <div class="relative p-8 bg-brand-900/50 rounded-3xl border border-brand-600 hover:border-cta/50 hover:bg-brand-900 transition duration-300 reveal group flex flex-col h-full" style="transition-delay: 100ms;">
                     <div class="absolute -top-5 -left-5 w-12 h-12 bg-slate-700 text-white font-bold rounded-2xl flex items-center justify-center shadow-lg group-hover:bg-cta group-hover:text-brand-900 transition text-xl">02</div>
                     <div class="mb-6 mt-2 text-cta text-3xl"><i class="fa-solid fa-compass-drafting"></i></div>
                     <h3 class="text-xl font-bold mb-3">Solution Architecture <br><span class="text-sm font-normal text-brand-100">(Thiết kế Giải pháp)</span></h3>
                     <p class="text-brand-100 text-sm mb-6 leading-relaxed flex-grow">Quy hoạch lại luồng quy trình E2E (End-to-End Process) và lựa chọn kiến trúc công nghệ phù hợp.</p>
-                    <div class="pt-5 border-t border-brand-600 text-xs text-cta/80 font-medium uppercase tracking-wide mt-auto min-h-[4.5rem]">
-                        Output: Quy hoạch E2E
-                    </div>
+                    <div class="pt-5 border-t border-brand-600 text-xs text-cta/80 font-medium uppercase tracking-wide mt-auto min-h-[4.5rem]">Output: Quy hoạch E2E</div>
                 </div>
-
-                <!-- Step 3 -->
                 <div class="relative p-8 bg-brand-900/50 rounded-3xl border border-brand-600 hover:border-cta/50 hover:bg-brand-900 transition duration-300 reveal group flex flex-col h-full" style="transition-delay: 200ms;">
                     <div class="absolute -top-5 -left-5 w-12 h-12 bg-slate-700 text-white font-bold rounded-2xl flex items-center justify-center shadow-lg group-hover:bg-cta group-hover:text-brand-900 transition text-xl">03</div>
                     <div class="mb-6 mt-2 text-cta text-3xl"><i class="fa-solid fa-code-branch"></i></div>
                     <h3 class="text-xl font-bold mb-3">System Implementation <br><span class="text-sm font-normal text-brand-100">(Xây dựng & Triển khai)</span></h3>
                     <p class="text-brand-100 text-sm mb-6 leading-relaxed flex-grow">Trực tiếp xây dựng hệ thống quản trị, biểu mẫu và Dashboard (Working Files) sẵn sàng vận hành.</p>
-                    <div class="pt-5 border-t border-brand-600 text-xs text-cta/80 font-medium uppercase tracking-wide mt-auto min-h-[4.5rem]">
-                        Output: Hệ thống Working Files
-                    </div>
+                    <div class="pt-5 border-t border-brand-600 text-xs text-cta/80 font-medium uppercase tracking-wide mt-auto min-h-[4.5rem]">Output: Hệ thống Working Files</div>
                 </div>
-
-                <!-- Step 4 -->
                 <div class="relative p-8 bg-brand-900/50 rounded-3xl border border-brand-600 hover:border-cta/50 hover:bg-brand-900 transition duration-300 reveal group flex flex-col h-full" style="transition-delay: 300ms;">
                     <div class="absolute -top-5 -left-5 w-12 h-12 bg-slate-700 text-white font-bold rounded-2xl flex items-center justify-center shadow-lg group-hover:bg-cta group-hover:text-brand-900 transition text-xl">04</div>
                     <div class="mb-6 mt-2 text-cta text-3xl"><i class="fa-solid fa-chalkboard-user"></i></div>
                     <h3 class="text-xl font-bold mb-3">Knowledge Transfer <br><span class="text-sm font-normal text-brand-100">(Chuyển giao & Tinh chỉnh)</span></h3>
                     <p class="text-brand-100 text-sm mb-6 leading-relaxed flex-grow">Đào tạo đội ngũ, đồng hành giám sát và tối ưu hóa hiệu suất vận hành.</p>
-                    <div class="pt-5 border-t border-brand-600 text-xs text-cta/80 font-medium uppercase tracking-wide mt-auto min-h-[4.5rem]">
-                        Output: Đội ngũ tự vận hành
-                    </div>
+                    <div class="pt-5 border-t border-brand-600 text-xs text-cta/80 font-medium uppercase tracking-wide mt-auto min-h-[4.5rem]">Output: Đội ngũ tự vận hành</div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- VISUAL DEMONSTRATION (UPDATED 3D CAROUSEL) -->
-    <!-- Reduced vertical padding from py-20 to py-10 for tighter look -->
+    <!-- VISUAL DEMONSTRATION (SPLIT MOBILE/DESKTOP) -->
     <section id="visual-demo" class="py-10 bg-white border-b border-slate-100 overflow-hidden">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 reveal">
-            <!-- Reduced bottom margin from mb-12 to mb-8 -->
             <div class="text-center mb-8">
-                <h2 class="text-2xl lg:text-3xl font-serif font-bold text-slate-900 mb-3">
-                    Vẻ đẹp của Sự Tích hợp Toàn diện
-                </h2>
-                <p class="text-slate-500 max-w-2xl mx-auto italic">
-                    "Khi công nghệ và quy trình hòa quyện, dữ liệu không chỉ là con số, mà là một dòng chảy nghệ thuật giúp doanh nghiệp vận hành không điểm nghẽn."
-                </p>
+                <h2 class="text-2xl lg:text-3xl font-serif font-bold text-slate-900 mb-3">Vẻ đẹp của Sự Tích hợp Toàn diện</h2>
+                <p class="text-slate-500 max-w-2xl mx-auto italic">"Khi công nghệ và quy trình hòa quyện, dữ liệu không chỉ là con số, mà là một dòng chảy nghệ thuật giúp doanh nghiệp vận hành không điểm nghẽn."</p>
             </div>
             
-            <!-- CAROUSEL WRAPPER -->
-            <div id="carousel-container" class="relative w-full">
-                <!-- Navigation Buttons (Outside for easier access) -->
-                <button id="prevBtn" class="absolute left-2 md:left-10 top-1/2 -translate-y-1/2 z-40 bg-white/90 hover:bg-white text-brand-900 p-3 md:p-4 rounded-full shadow-xl transition transform hover:scale-110 focus:outline-none border border-brand-100">
-                    <i class="fa-solid fa-chevron-left text-xl"></i>
-                </button>
-                <button id="nextBtn" class="absolute right-2 md:right-10 top-1/2 -translate-y-1/2 z-40 bg-white/90 hover:bg-white text-brand-900 p-3 md:p-4 rounded-full shadow-xl transition transform hover:scale-110 focus:outline-none border border-brand-100">
-                    <i class="fa-solid fa-chevron-right text-xl"></i>
-                </button>
+            <!-- MOBILE VERSION (Swipe Cards) -->
+            <div class="md:hidden">
+                <div class="flex overflow-x-auto snap-x snap-mandatory gap-4 pb-6 px-2 scrollbar-hide" style="-webkit-overflow-scrolling: touch;">
+                    <div class="snap-center shrink-0 w-[85vw] bg-white rounded-2xl shadow-lg border border-slate-100 overflow-hidden">
+                        <div class="relative">
+                            <span class="absolute top-3 left-3 bg-white/90 text-brand-900 text-[10px] font-bold px-3 py-1 rounded-full border border-slate-200 shadow-sm z-10">DATA FLOW</span>
+                            <img src="https://ik.imagekit.io/TNConsultant/Beegrowth/To%CC%82%CC%81i%20Va%CC%A3%CC%82n%20Ha%CC%80nh%20vo%CC%9B%CC%81i%20Lark%20_New_.gif" alt="Minh họa luồng dữ liệu" class="w-full h-auto object-contain bg-brand-50">
+                        </div>
+                        <div class="p-5 bg-white">
+                            <h3 class="font-bold text-brand-600 text-lg mb-2">Tổng quan Luồng dữ liệu</h3>
+                            <p class="text-slate-500 text-sm leading-relaxed">Mô tả chi tiết về cách dữ liệu được tự động hóa giữa các phòng ban Sales, CSKH và HR, loại bỏ thao tác thủ công.</p>
+                        </div>
+                    </div>
+                    <div class="snap-center shrink-0 w-[85vw] bg-white rounded-2xl shadow-lg border border-slate-100 overflow-hidden">
+                        <div class="relative">
+                            <span class="absolute top-3 left-3 bg-white/90 text-brand-900 text-[10px] font-bold px-3 py-1 rounded-full border border-slate-200 shadow-sm z-10">MASTER PROCESS</span>
+                            <img src="https://ik.imagekit.io/TNConsultant/Beegrowth/To%CC%82%CC%81i%20Va%CC%A3%CC%82n%20Ha%CC%80nh%20vo%CC%9B%CC%81i%20Lark%20_New_%20(1).gif" alt="Chi tiết vận hành" class="w-full h-auto object-contain bg-brand-50">
+                        </div>
+                        <div class="p-5 bg-white">
+                            <h3 class="font-bold text-brand-600 text-lg mb-2">Chi tiết Vận hành</h3>
+                            <p class="text-slate-500 text-sm leading-relaxed">Đi sâu vào quy trình nghiệp vụ chính và cách các phòng ban kết nối realtime với nhau trên nền tảng Lark Suite.</p>
+                        </div>
+                    </div>
+                    <div class="snap-center shrink-0 w-[85vw] bg-white rounded-2xl shadow-lg border border-slate-100 overflow-hidden">
+                        <div class="relative">
+                            <span class="absolute top-3 left-3 bg-white/90 text-brand-900 text-[10px] font-bold px-3 py-1 rounded-full border border-slate-200 shadow-sm z-10">LIÊN PHÒNG BAN</span>
+                            <img src="https://ik.imagekit.io/TNConsultant/Beegrowth/_10.2025_%20So%CC%82%CC%81%20hoa%CC%81%20va%CC%A3%CC%82n%20ha%CC%80nh.gif" alt="Lộ trình số hóa" class="w-full h-auto object-contain bg-brand-50">
+                        </div>
+                        <div class="p-5 bg-white">
+                            <h3 class="font-bold text-brand-600 text-lg mb-2">Vision 2025</h3>
+                            <p class="text-slate-500 text-sm leading-relaxed">Tầm nhìn về một hệ thống vận hành số hóa toàn diện, kết nối liền mạch mọi hoạt động của doanh nghiệp.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="text-center mt-2 text-slate-400 text-xs animate-pulse"><i class="fa-solid fa-arrow-left mr-1"></i> Vuốt để xem tiếp <i class="fa-solid fa-arrow-right ml-1"></i></div>
+            </div>
 
-                <!-- Track - Adjusted height for tighter display (400px mobile / 550px desktop) -->
-                <div class="carousel-track h-[400px] md:h-[550px] flex items-center justify-center relative w-full">
-                    
-                    <!-- Slide 1 -->
+            <!-- DESKTOP VERSION (3D Slider) -->
+            <div id="carousel-container" class="relative w-full hidden md:block">
+                <button id="prevBtn" class="absolute left-2 md:left-10 top-1/2 -translate-y-1/2 z-40 bg-white/90 hover:bg-white text-brand-900 p-3 md:p-4 rounded-full shadow-xl transition transform hover:scale-110 focus:outline-none border border-brand-100"><i class="fa-solid fa-chevron-left text-xl"></i></button>
+                <button id="nextBtn" class="absolute right-2 md:right-10 top-1/2 -translate-y-1/2 z-40 bg-white/90 hover:bg-white text-brand-900 p-3 md:p-4 rounded-full shadow-xl transition transform hover:scale-110 focus:outline-none border border-brand-100"><i class="fa-solid fa-chevron-right text-xl"></i></button>
+                <div class="carousel-track flex items-center justify-center relative w-full">
                     <div class="slide active" data-index="0">
                         <span class="category-label">Data flow</span>
-                        <img src="https://ik.imagekit.io/TNConsultant/Beegrowth/To%CC%82%CC%81i%20Va%CC%A3%CC%82n%20Ha%CC%80nh%20vo%CC%9B%CC%81i%20Lark%20_New_.gif" 
-                             alt="Minh họa luồng dữ liệu Sales, CSKH, HR" 
-                             class="w-full h-full object-cover">
+                        <img src="https://ik.imagekit.io/TNConsultant/Beegrowth/To%CC%82%CC%81i%20Va%CC%A3%CC%82n%20Ha%CC%80nh%20vo%CC%9B%CC%81i%20Lark%20_New_.gif" alt="Minh họa luồng dữ liệu Sales, CSKH, HR" class="w-full h-full object-cover">
                         <div class="description-box">
                             <p class="text-base font-bold text-cta mb-1">Tổng quan Luồng dữ liệu Tự động hóa</p>
                             <p class="text-sm opacity-90">Mô tả chi tiết về cách dữ liệu được tự động hóa giữa các phòng ban Sales, CSKH và HR.</p>
                         </div>
                     </div>
-
-                    <!-- Slide 2 -->
                     <div class="slide next" data-index="1">
                         <span class="category-label">Master process</span>
-                        <img src="https://ik.imagekit.io/TNConsultant/Beegrowth/To%CC%82%CC%81i%20Va%CC%A3%CC%82n%20Ha%CC%80nh%20vo%CC%9B%CC%81i%20Lark%20_New_%20(1).gif" 
-                             alt="Chi tiết vận hành trên Lark Suite" 
-                             class="w-full h-full object-cover">
+                        <img src="https://ik.imagekit.io/TNConsultant/Beegrowth/To%CC%82%CC%81i%20Va%CC%A3%CC%82n%20Ha%CC%80nh%20vo%CC%9B%CC%81i%20Lark%20_New_%20(1).gif" alt="Chi tiết vận hành trên Lark Suite" class="w-full h-full object-cover">
                         <div class="description-box">
                             <p class="text-base font-bold text-cta mb-1">Chi tiết Vận hành & Kết nối các phòng ban</p>
                             <p class="text-sm opacity-90">Đi sâu vào quy trình vận hành chính và cách các phòng ban kết nối với nhau trên nền tảng Lark Suite.</p>
                         </div>
                     </div>
-
-                    <!-- Slide 3 -->
                     <div class="slide prev" data-index="2">
                         <span class="category-label">Vận hành liên phòng ban</span>
-                        <img src="https://ik.imagekit.io/TNConsultant/Beegrowth/_10.2025_%20So%CC%82%CC%81%20hoa%CC%81%20va%CC%A3%CC%82n%20ha%CC%80nh.gif" 
-                             alt="Quy trình Số hóa Vận hành 2025" 
-                             class="w-full h-full object-cover">
+                        <img src="https://ik.imagekit.io/TNConsultant/Beegrowth/_10.2025_%20So%CC%82%CC%81%20hoa%CC%81%20va%CC%A3%CC%82n%20ha%CC%80nh.gif" alt="Quy trình Số hóa Vận hành 2025" class="w-full h-full object-cover">
                         <div class="description-box">
                             <p class="text-base font-bold text-cta mb-1">Lộ trình Số hóa Vận hành Toàn diện (Vision 2025)</p>
                             <p class="text-sm opacity-90">Tầm nhìn về một hệ thống vận hành số hóa toàn diện, kết nối liền mạch mọi hoạt động của doanh nghiệp.</p>
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>
@@ -656,30 +551,23 @@
     <!-- TIMELINE ROADMAP -->
     <section class="py-24 bg-white">
         <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 reveal">
-            <h2 class="text-2xl lg:text-3xl font-serif font-bold text-center text-slate-900 mb-12">
-                Timeline dự kiến cho một dự án Chuyển đổi
-            </h2>
-            
+            <h2 class="text-2xl lg:text-3xl font-serif font-bold text-center text-slate-900 mb-12">Timeline dự kiến cho một dự án Chuyển đổi</h2>
             <div class="relative border-l-4 border-slate-100 ml-6 space-y-12">
-                <!-- Item 1 -->
                 <div class="relative pl-10">
                     <div class="absolute -left-[11px] top-1 w-6 h-6 bg-brand-500 rounded-full border-4 border-white shadow-md"></div>
                     <h4 class="font-bold text-xl text-slate-800">Tuần 1-2: Khảo sát & Healthcheck</h4>
                     <p class="text-slate-500 text-base mt-2">Phỏng vấn nhân sự, đi thực tế cửa hàng, audit dữ liệu.</p>
                 </div>
-                <!-- Item 2 -->
                 <div class="relative pl-10">
                     <div class="absolute -left-[11px] top-1 w-6 h-6 bg-slate-300 rounded-full border-4 border-white shadow-md"></div>
                     <h4 class="font-bold text-xl text-slate-800">Tuần 3-6: Thiết kế & Xây dựng (Focus)</h4>
                     <p class="text-slate-500 text-base mt-2">Giai đoạn tập trung cao độ. Xây dựng quy trình và bộ Working Files.</p>
                 </div>
-                <!-- Item 3 -->
                 <div class="relative pl-10">
                     <div class="absolute -left-[11px] top-1 w-6 h-6 bg-slate-300 rounded-full border-4 border-white shadow-md"></div>
                     <h4 class="font-bold text-xl text-slate-800">Tuần 7-8: Đào tạo & Chạy thử (Pilot)</h4>
                     <p class="text-slate-500 text-base mt-2">Hướng dẫn nhân viên nhập liệu, sửa lỗi phát sinh ngay tại chỗ.</p>
                 </div>
-                <!-- Item 4 -->
                 <div class="relative pl-10">
                     <div class="absolute -left-[11px] top-1 w-6 h-6 bg-brand-500 rounded-full border-4 border-white shadow-md"></div>
                     <h4 class="font-bold text-xl text-slate-800">Tuần 9-12: Nghiệm thu & Tối ưu hóa</h4>
@@ -692,18 +580,12 @@
     <!-- CASE STUDY -->
     <section class="py-24 bg-brand-50">
         <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 reveal">
-            <h2 class="text-3xl font-serif font-bold text-center text-brand-900 mb-12">
-                Kết quả thực tế thay vì lời hứa suông
-            </h2>
-
+            <h2 class="text-3xl font-serif font-bold text-center text-brand-900 mb-12">Kết quả thực tế thay vì lời hứa suông</h2>
             <div class="bg-white p-10 rounded-3xl shadow-lg border border-brand-100 flex flex-col md:flex-row gap-10 items-center">
                 <div class="w-full md:w-1/2">
                     <h3 class="text-2xl font-bold text-slate-800 mb-2">Case Study: Brand Thời trang X</h3>
                     <p class="text-slate-500 mb-6 font-medium">Doanh thu: 50 tỷ/năm | Chuỗi 8 cửa hàng</p>
-                    <p class="text-slate-600 text-lg leading-relaxed italic relative">
-                        <span class="text-4xl text-brand-200 absolute -top-4 -left-4">"</span>
-                        Trước khi làm việc với BeeGrowth, chúng tôi bị mất hàng liên tục mà không tìm ra nguyên nhân. Nhân viên kho và kế toán đổ lỗi cho nhau. Sau 3 tháng, mọi thứ minh bạch trên Dashboard.
-                    </p>
+                    <p class="text-slate-600 text-lg leading-relaxed italic relative"><span class="text-4xl text-brand-200 absolute -top-4 -left-4">"</span>Trước khi làm việc với BeeGrowth, chúng tôi bị mất hàng liên tục mà không tìm ra nguyên nhân. Nhân viên kho và kế toán đổ lỗi cho nhau. Sau 3 tháng, mọi thứ minh bạch trên Dashboard.</p>
                 </div>
                 <div class="w-full md:w-1/2 grid grid-cols-2 gap-6">
                     <div class="bg-slate-50 p-6 rounded-2xl text-center border border-slate-100">
@@ -731,25 +613,16 @@
                 <div class="w-full md:w-1/3">
                     <div class="relative mx-auto w-64 h-64 md:w-72 md:h-72">
                         <div class="absolute inset-0 border-2 border-brand-400 rounded-full transform translate-x-3 translate-y-3"></div>
-                        <img src="https://ik.imagekit.io/TNConsultant/Beegrowth/Tuyet%20profile.jpg?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
-                             alt="Cao Ánh Tuyết Portrait" 
-                             class="rounded-full w-full h-full object-cover border-4 border-white shadow-xl relative z-10 grayscale hover:grayscale-0 transition duration-500">
+                        <img src="https://ik.imagekit.io/TNConsultant/Beegrowth/Tuyet%20profile.jpg?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Cao Ánh Tuyết Portrait" class="rounded-full w-full h-full object-cover border-4 border-white shadow-xl relative z-10 grayscale hover:grayscale-0 transition duration-500">
                     </div>
                 </div>
                 <div class="w-full md:w-2/3 text-center md:text-left">
                     <h3 class="text-2xl font-bold text-slate-900 mb-1">Cao Ánh Tuyết</h3>
                     <p class="text-brand-600 font-bold mb-8 text-lg">Founder BeeGrowth</p>
-                    
                     <div class="space-y-6 text-slate-600 leading-relaxed mb-8 text-lg">
-                        <p>
-                            <i class="fa-solid fa-quote-left text-brand-400 mr-2"></i>
-                            14 năm thực chiến trong lĩnh vực Retail & Fashion tại Việt Nam. Không phải lý thuyết suông, tôi là người trực tiếp vận hành, trải qua những "nỗi đau" mất hàng, lệch dòng tiền như bạn.
-                        </p>
-                        <p>
-                            Tôi sở hữu năng lực <strong>"The Translator" (Người Dịch Thuật)</strong>: Kết nối ngôn ngữ kinh doanh bay bổng của CEO với ngôn ngữ kỹ thuật, logic của hệ thống quản trị.
-                        </p>
+                        <p><i class="fa-solid fa-quote-left text-brand-400 mr-2"></i>14 năm thực chiến trong lĩnh vực Retail & Fashion tại Việt Nam. Không phải lý thuyết suông, tôi là người trực tiếp vận hành, trải qua những "nỗi đau" mất hàng, lệch dòng tiền như bạn.</p>
+                        <p>Tôi sở hữu năng lực <strong>"The Translator" (Người Dịch Thuật)</strong>: Kết nối ngôn ngữ kinh doanh bay bổng của CEO với ngôn ngữ kỹ thuật, logic của hệ thống quản trị.</p>
                     </div>
-                    
                     <div class="bg-white p-6 rounded-2xl border-l-4 border-brand-500 shadow-sm inline-block">
                         <p class="text-slate-800 font-medium italic">"Quy trình sinh ra là để phục vụ kinh doanh, không phải để làm khó nhân viên."</p>
                     </div>
@@ -763,20 +636,12 @@
         <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 reveal">
             <h2 class="text-2xl font-serif font-bold text-center mb-12 text-brand-900">Câu hỏi thường gặp</h2>
             <div class="space-y-8">
-                <!-- Q1 -->
                 <div class="bg-slate-50 p-6 rounded-2xl border border-slate-100">
-                    <h4 class="font-bold text-slate-800 text-lg mb-3 flex items-center gap-3">
-                        <i class="fa-solid fa-circle-question text-brand-500 text-xl"></i>
-                        BeeGrowth có bán phần mềm không?
-                    </h4>
+                    <h4 class="font-bold text-slate-800 text-lg mb-3 flex items-center gap-3"><i class="fa-solid fa-circle-question text-brand-500 text-xl"></i>BeeGrowth có bán phần mềm không?</h4>
                     <p class="text-slate-600 pl-8 leading-relaxed">Không. Chúng tôi thiết kế giải pháp trên nền tảng phù hợp nhất với quy mô của bạn (Excel/Lark/Base...). Chúng tôi đứng về phía bạn để chọn công cụ, chứ không phải đại lý bán phần mềm.</p>
                 </div>
-                <!-- Q2 -->
                 <div class="bg-slate-50 p-6 rounded-2xl border border-slate-100">
-                    <h4 class="font-bold text-slate-800 text-lg mb-3 flex items-center gap-3">
-                        <i class="fa-solid fa-circle-question text-brand-500 text-xl"></i>
-                        Chi phí tính thế nào?
-                    </h4>
+                    <h4 class="font-bold text-slate-800 text-lg mb-3 flex items-center gap-3"><i class="fa-solid fa-circle-question text-brand-500 text-xl"></i>Chi phí tính thế nào?</h4>
                     <p class="text-slate-600 pl-8 leading-relaxed">Chúng tôi tính phí theo Dự án (Project-based) với kết quả đầu ra cụ thể (Bộ quy trình, Hệ thống báo cáo...), không tính theo giờ tư vấn. Bạn biết chính xác mình bỏ ra bao nhiêu và nhận lại cái gì.</p>
                 </div>
             </div>
@@ -785,34 +650,17 @@
 
     <!-- FINAL CTA -->
     <section id="contact" class="py-24 bg-brand-900 text-white relative overflow-hidden rounded-t-[3rem] -mb-1">
-        <!-- Decor -->
         <div class="absolute top-0 right-0 w-80 h-80 bg-cta/10 rounded-full blur-3xl"></div>
         <div class="absolute bottom-0 left-0 w-80 h-80 bg-white/5 rounded-full blur-3xl"></div>
-
         <div class="max-w-4xl mx-auto px-4 text-center reveal relative z-10">
-            <h2 class="text-4xl lg:text-5xl font-serif font-bold mb-10">
-                Đã đến lúc Doanh nghiệp cần một <br> <span class="text-cta">"Hệ điều hành"</span> mới.
-            </h2>
-            
+            <h2 class="text-4xl lg:text-5xl font-serif font-bold mb-10">Đã đến lúc Doanh nghiệp cần một <br> <span class="text-cta">"Hệ điều hành"</span> mới.</h2>
             <div class="bg-white p-10 rounded-3xl shadow-2xl max-w-lg mx-auto transform hover:-translate-y-1 transition duration-300">
                 <h3 class="text-2xl font-bold text-slate-800 mb-8">Đăng ký Audit 1:1 ngay</h3>
-                
                 <form class="space-y-5 text-left">
-                    <div>
-                        <label class="block text-sm font-medium text-slate-700 mb-1.5">Họ tên</label>
-                        <input type="text" class="w-full px-5 py-3.5 rounded-xl border border-slate-300 focus:border-brand-500 focus:ring-1 focus:ring-brand-500 outline-none transition text-slate-800 bg-slate-50" placeholder="Ví dụ: Nguyễn Văn A">
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium text-slate-700 mb-1.5">Số điện thoại / Zalo</label>
-                        <input type="tel" class="w-full px-5 py-3.5 rounded-xl border border-slate-300 focus:border-brand-500 focus:ring-1 focus:ring-brand-500 outline-none transition text-slate-800 bg-slate-50" placeholder="0909 xxx xxx">
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium text-slate-700 mb-1.5">Vấn đề lớn nhất đang gặp phải</label>
-                        <textarea rows="3" class="w-full px-5 py-3.5 rounded-xl border border-slate-300 focus:border-brand-500 focus:ring-1 focus:ring-brand-500 outline-none transition text-slate-800 bg-slate-50" placeholder="Ví dụ: Lệch kho, Nhân viên làm sai quy trình..."></textarea>
-                    </div>
-                    <button type="button" class="w-full py-4 bg-cta text-brand-900 font-bold rounded-full hover:bg-cta-hover transition text-lg shadow-xl shadow-cta/20 mt-4">
-                        Gửi yêu cầu ngay <i class="fa-solid fa-arrow-right ml-2"></i>
-                    </button>
+                    <div><label class="block text-sm font-medium text-slate-700 mb-1.5">Họ tên</label><input type="text" class="w-full px-5 py-3.5 rounded-xl border border-slate-300 focus:border-brand-500 focus:ring-1 focus:ring-brand-500 outline-none transition text-slate-800 bg-slate-50" placeholder="Ví dụ: Nguyễn Văn A"></div>
+                    <div><label class="block text-sm font-medium text-slate-700 mb-1.5">Số điện thoại / Zalo</label><input type="tel" class="w-full px-5 py-3.5 rounded-xl border border-slate-300 focus:border-brand-500 focus:ring-1 focus:ring-brand-500 outline-none transition text-slate-800 bg-slate-50" placeholder="0909 xxx xxx"></div>
+                    <div><label class="block text-sm font-medium text-slate-700 mb-1.5">Vấn đề lớn nhất đang gặp phải</label><textarea rows="3" class="w-full px-5 py-3.5 rounded-xl border border-slate-300 focus:border-brand-500 focus:ring-1 focus:ring-brand-500 outline-none transition text-slate-800 bg-slate-50" placeholder="Ví dụ: Lệch kho, Nhân viên làm sai quy trình..."></textarea></div>
+                    <button type="button" class="w-full py-4 bg-cta text-brand-900 font-bold rounded-full hover:bg-cta-hover transition text-lg shadow-xl shadow-cta/20 mt-4">Gửi yêu cầu ngay <i class="fa-solid fa-arrow-right ml-2"></i></button>
                 </form>
                 <p class="text-xs text-slate-400 mt-6 text-center">Cam kết bảo mật 100% thông tin doanh nghiệp.</p>
             </div>
@@ -822,10 +670,7 @@
     <!-- FOOTER -->
     <footer class="bg-slate-50 border-t border-slate-200 py-12">
         <div class="max-w-7xl mx-auto px-4 text-center text-slate-500">
-            <div class="flex justify-center items-center gap-2 mb-6">
-                <!-- Changed to LOGO-1 (Purple Text + Yellow E) in Footer -->
-                <img src="https://ik.imagekit.io/TNConsultant/Beegrowth/BEEGROWTH%20LOGO-1.png" alt="BeeGrowth Logo" class="h-12 w-auto object-contain">
-            </div>
+            <div class="flex justify-center items-center gap-2 mb-6"><img src="https://ik.imagekit.io/TNConsultant/Beegrowth/BEEGROWTH%20LOGO-1.png" alt="BeeGrowth Logo" class="h-12 w-auto object-contain"></div>
             <p class="mb-8 font-medium">Đối tác tư vấn vận hành thực chiến cho SME Bán lẻ Việt Nam.</p>
             <div class="flex justify-center gap-8 mb-8">
                 <a href="#" class="text-slate-400 hover:text-brand-600 transition hover:scale-110 transform"><i class="fa-brands fa-linkedin text-2xl"></i></a>
@@ -836,7 +681,7 @@
         </div>
     </footer>
 
-    <!-- SCRIPT FOR ANIMATIONS & SLIDER -->
+    <!-- SCRIPT -->
     <script>
         // Reveal on Scroll
         function reveal() {
@@ -851,20 +696,18 @@
             }
         }
         window.addEventListener("scroll", reveal);
-        // Trigger once on load
         reveal();
 
         // Mobile Menu Toggle
         const btn = document.querySelector("button.mobile-menu-button");
         const menu = document.querySelector(".mobile-menu");
-
         if(btn && menu) {
             btn.addEventListener("click", () => {
                 menu.classList.toggle("hidden");
             });
         }
 
-        // --- 3D ROTATING CAROUSEL LOGIC ---
+        // --- 3D ROTATING CAROUSEL LOGIC (DESKTOP ONLY) ---
         const slides = document.querySelectorAll('.slide');
         const prevBtn = document.getElementById('prevBtn');
         const nextBtn = document.getElementById('nextBtn');
@@ -873,11 +716,7 @@
 
         function updateCarousel() {
             slides.forEach((slide, index) => {
-                // Reset classes
                 slide.className = 'slide';
-                
-                // Calculate position relative to current index
-                // We need circular logic
                 let position = (index - currentIndex + totalSlides) % totalSlides;
                 
                 if (position === 0) {
@@ -902,14 +741,11 @@
             updateCarousel();
         }
 
-        // Event Listeners
         if(nextBtn) nextBtn.addEventListener('click', nextSlide);
         if(prevBtn) prevBtn.addEventListener('click', prevSlide);
 
-        // Click on slide to make it active
         slides.forEach((slide, index) => {
             slide.addEventListener('click', () => {
-                // If it's prev, go prev. If next, go next.
                 let position = (index - currentIndex + totalSlides) % totalSlides;
                 if (position === totalSlides - 1) {
                     prevSlide();
@@ -919,13 +755,10 @@
             });
         });
 
-        // Initialize
+        // Initialize and Auto Rotate for Desktop
         updateCarousel();
+        let autoRotate = setInterval(nextSlide, 5000); 
 
-        // Auto rotate
-        let autoRotate = setInterval(nextSlide, 5000); // 5 seconds
-
-        // Pause on hover
         const container = document.getElementById('carousel-container');
         if(container) {
             container.addEventListener('mouseenter', () => clearInterval(autoRotate));
@@ -933,7 +766,6 @@
                 autoRotate = setInterval(nextSlide, 5000);
             });
         }
-
     </script>
 </body>
 </html>
