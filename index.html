@@ -22,16 +22,17 @@
             theme: {
                 extend: {
                     colors: {
+                        // REVERTED TO ORIGINAL PALETTE (LIME & DARK GREEN)
                         brand: {
                             50: '#f2f8f6',
                             100: '#dbece6',
                             400: '#4da685',
-                            500: '#175c44',
+                            500: '#175c44', // Main Brand Green
                             600: '#114a36',
-                            900: '#0b3224',
+                            900: '#0b3224', // Deepest Green
                         },
                         cta: {
-                            DEFAULT: '#6ef08e',
+                            DEFAULT: '#6ef08e', // Lime Green
                             hover: '#5ce07b',
                         },
                         slate: {
@@ -74,7 +75,7 @@
             transform: translateY(0);
         }
 
-        /* Glowing effect for the Point */
+        /* Glowing effect for the Point (Lime Green) */
         .glow-point {
             box-shadow: 0 0 15px 5px rgba(110, 240, 142, 0.6);
             animation: pulse-glow 2s infinite;
@@ -86,14 +87,21 @@
             100% { box-shadow: 0 0 0 0 rgba(110, 240, 142, 0); }
         }
 
-        /* IMPROVED TYPOGRAPHY FOR HEADLINES */
+        /* IMPROVED TYPOGRAPHY */
         h1, h2, h3, h4 {
-            text-wrap: balance; /* Prevents orphans and balances lines */
+            text-wrap: balance;
         }
         
-        /* Ensure badge text doesn't break awkwardly */
         .badge-text {
             white-space: nowrap;
+        }
+
+        /* GIF CONTAINER STYLE */
+        .gif-container img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 1.5rem;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
         }
     </style>
 </head>
@@ -105,7 +113,6 @@
             <div class="flex justify-between h-22 py-4 items-center">
                 <!-- Logo -->
                 <div class="flex-shrink-0 flex items-center gap-2 cursor-pointer" onclick="window.scrollTo(0,0)">
-                    <!-- Changed to LOGO-1 (Purple Text + Yellow E) -->
                     <img src="https://ik.imagekit.io/TNConsultant/Beegrowth/BEEGROWTH%20LOGO-1.png" alt="BeeGrowth Logo" class="h-10 md:h-14 w-auto object-contain">
                 </div>
 
@@ -115,7 +122,7 @@
                     <a href="#differentiation" class="text-slate-600 hover:text-brand-600 font-medium transition">Vị Thế</a>
                     <a href="#methodology" class="text-slate-600 hover:text-brand-600 font-medium transition">Giải Pháp</a>
                     <a href="#expert" class="text-slate-600 hover:text-brand-600 font-medium transition">Expert</a>
-                    <!-- CTA Button: Shortened Text -->
+                    <!-- CTA Button: Lime Green + Dark Text -->
                     <a href="#contact" class="px-6 py-3 bg-cta text-brand-900 font-bold rounded-full hover:bg-cta-hover transition shadow-lg shadow-cta/30 transform hover:-translate-y-0.5 border border-transparent hover:border-cta-hover">
                         Đăng ký Khảo sát
                     </a>
@@ -140,7 +147,7 @@
         </div>
     </nav>
 
-    <!-- HERO SECTION (Updated) -->
+    <!-- HERO SECTION -->
     <section class="relative pt-36 pb-20 lg:pt-48 lg:pb-32 hero-pattern overflow-hidden">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <div class="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
@@ -150,7 +157,7 @@
                         <span class="w-2 h-2 rounded-full bg-brand-500 animate-pulse"></span>
                         Định vị Chuyên gia Retail & Fashion
                     </div>
-                    <!-- Increased leading (line-height) to relaxed for better spacing -->
+                    <!-- Headline with Lime/Green accents -->
                     <h1 class="text-4xl lg:text-5xl font-serif font-bold text-slate-900 leading-relaxed mb-6">
                         Kiến tạo Hệ thống Vận hành Bền vững & <span class="relative inline-block text-brand-600">Số hóa Thực chiến<span class="absolute bottom-1 left-0 w-full h-3 bg-cta/40 -z-10 transform -rotate-1 rounded-full"></span></span> cho Doanh nghiệp Bán lẻ.
                     </h1>
@@ -159,7 +166,7 @@
                     </p>
                     
                     <div class="flex flex-col sm:flex-start gap-4">
-                        <!-- Shortened CTA -->
+                        <!-- CTA Button: Lime Green + Dark Text -->
                         <a href="#contact" class="inline-flex justify-center items-center px-10 py-4 bg-cta text-brand-900 font-bold rounded-full hover:bg-cta-hover transition shadow-xl shadow-cta/40 text-lg transform hover:-translate-y-1">
                             Đăng ký Khảo sát
                         </a>
@@ -169,11 +176,11 @@
 
                 <!-- Hero Image -->
                 <div class="relative reveal">
-                    <!-- Background blobs -->
+                    <!-- Background blobs (Lime/Green) -->
                     <div class="absolute -top-10 -right-10 w-72 h-72 bg-cta/20 rounded-full blur-3xl opacity-60"></div>
                     <div class="absolute -bottom-10 -left-10 w-64 h-64 bg-slate-200 rounded-full blur-3xl opacity-60"></div>
                     
-                    <!-- Main Image Frame: Rounded 3xl for smoother curve -->
+                    <!-- Main Image Frame -->
                     <div class="relative rounded-3xl overflow-hidden shadow-2xl border-4 border-white transform rotate-2 hover:rotate-0 transition duration-500 group">
                         <img src="https://images.unsplash.com/photo-1531403009284-440f080d1e12?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" 
                              alt="Consultant planning flowchart on whiteboard" 
@@ -197,11 +204,10 @@
         </div>
     </section>
 
-    <!-- PROBLEM SECTION: The Challenge (Updated with spacing fix) -->
+    <!-- PROBLEM SECTION: The Challenge (Restored Multi-color Cards) -->
     <section id="problem" class="py-24 bg-brand-50/50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center max-w-3xl mx-auto mb-16 reveal">
-                <!-- Increased leading to leading-loose to prevent red highlight overlapping the text above -->
                 <h2 class="text-3xl lg:text-4xl font-serif font-bold text-brand-900 mb-6 leading-loose">
                     Khi quy mô mở rộng, mô hình <br class="hidden md:block"> <span class="text-red-600 bg-red-50 px-4 py-1 rounded-full whitespace-nowrap inline-block mt-2 md:mt-0">quản trị cũ liệu còn phù hợp?</span>
                 </h2>
@@ -211,7 +217,7 @@
             </div>
 
             <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-                <!-- Card 1 -->
+                <!-- Card 1: Red -->
                 <div class="bg-white p-8 rounded-3xl border border-slate-100 shadow-sm hover:shadow-xl hover:-translate-y-1 transition duration-300 reveal group hover:border-brand-500">
                     <div class="w-14 h-14 bg-red-50 text-red-600 rounded-2xl flex items-center justify-center text-2xl mb-6 group-hover:bg-red-600 group-hover:text-white transition shadow-sm">
                         <i class="fa-solid fa-chart-line"></i>
@@ -222,7 +228,7 @@
                     </p>
                 </div>
 
-                <!-- Card 2 -->
+                <!-- Card 2: Orange -->
                 <div class="bg-white p-8 rounded-3xl border border-slate-100 shadow-sm hover:shadow-xl hover:-translate-y-1 transition duration-300 reveal group hover:border-brand-500" style="transition-delay: 100ms;">
                     <div class="w-14 h-14 bg-orange-50 text-orange-600 rounded-2xl flex items-center justify-center text-2xl mb-6 group-hover:bg-orange-600 group-hover:text-white transition shadow-sm">
                         <i class="fa-solid fa-user-lock"></i>
@@ -233,7 +239,7 @@
                     </p>
                 </div>
 
-                <!-- Card 3 -->
+                <!-- Card 3: Slate -->
                 <div class="bg-white p-8 rounded-3xl border border-slate-100 shadow-sm hover:shadow-xl hover:-translate-y-1 transition duration-300 reveal group hover:border-brand-500" style="transition-delay: 200ms;">
                     <div class="w-14 h-14 bg-slate-100 text-slate-600 rounded-2xl flex items-center justify-center text-2xl mb-6 group-hover:bg-slate-600 group-hover:text-white transition shadow-sm">
                         <i class="fa-solid fa-link-slash"></i>
@@ -244,7 +250,7 @@
                     </p>
                 </div>
 
-                <!-- Card 4 -->
+                <!-- Card 4: Blue -->
                 <div class="bg-white p-8 rounded-3xl border border-slate-100 shadow-sm hover:shadow-xl hover:-translate-y-1 transition duration-300 reveal group hover:border-brand-500" style="transition-delay: 300ms;">
                     <div class="w-14 h-14 bg-blue-50 text-blue-600 rounded-2xl flex items-center justify-center text-2xl mb-6 group-hover:bg-blue-600 group-hover:text-white transition shadow-sm">
                         <i class="fa-solid fa-user-tie"></i>
@@ -262,7 +268,6 @@
     <section id="differentiation" class="py-24 bg-white border-y border-slate-50">
         <div class="max-w-7xl mx-auto px-6 lg:px-8">
             
-            <!-- Header Section with balanced text -->
             <div class="text-center mb-20 reveal">
                 <span class="text-brand-600 font-semibold tracking-widest text-xs uppercase mb-3 block">Market Landscape</span>
                 <h2 class="text-3xl lg:text-5xl font-serif font-bold text-slate-900 mb-6 leading-relaxed">
@@ -278,7 +283,6 @@
                 <!-- Content Left -->
                 <div class="reveal order-2 lg:order-1">
                     <div class="space-y-10">
-                        
                         <!-- The Gap Identified -->
                         <div class="relative pl-8 border-l border-slate-200">
                             <h3 class="font-serif font-bold text-slate-800 text-xl mb-4">Khoảng trống của Thị trường:</h3>
@@ -381,7 +385,7 @@
                             </div>
                         </div>
 
-                        <!-- BeeGrowth Sweet Spot -->
+                        <!-- BeeGrowth Sweet Spot (Lime Green Pulse) -->
                         <div class="absolute bottom-[30%] right-[30%] transform translate-x-1/2 translate-y-1/2 flex flex-col items-center z-20 group">
                             <div class="relative flex items-center justify-center cursor-pointer">
                                 <div class="absolute w-20 h-20 bg-cta/20 rounded-full animate-ping"></div>
@@ -403,7 +407,7 @@
         </div>
     </section>
 
-    <!-- METHODOLOGY: The Framework (Updated with fixed spacing) -->
+    <!-- METHODOLOGY: The Framework (Restored Dark Theme) -->
     <section id="methodology" class="py-24 bg-brand-900 text-white rounded-t-4xl rounded-b-4xl mx-4 my-8 lg:mx-8">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-16 reveal">
@@ -419,7 +423,6 @@
                     <div class="absolute -top-5 -left-5 w-12 h-12 bg-cta text-brand-900 font-bold rounded-2xl flex items-center justify-center shadow-lg text-xl">01</div>
                     <div class="mb-6 mt-2 text-cta text-3xl"><i class="fa-solid fa-stethoscope"></i></div>
                     <h3 class="text-xl font-bold mb-3">Diagnostic Audit <br><span class="text-sm font-normal text-brand-100">(Chẩn đoán Hiện trạng)</span></h3>
-                    <!-- Fixed Bottlenecks breaking -->
                     <p class="text-brand-100 text-sm mb-6 leading-relaxed flex-grow">Đánh giá sức khỏe doanh nghiệp, nhận diện <span class="whitespace-nowrap">điểm nghẽn (Bottlenecks)</span> và lãng phí trong chuỗi giá trị.</p>
                     <div class="pt-5 border-t border-brand-600 text-xs text-cta/80 font-medium uppercase tracking-wide mt-auto min-h-[4.5rem]">
                         Output: Báo cáo chẩn đoán
@@ -458,6 +461,26 @@
                         Output: Đội ngũ tự vận hành
                     </div>
                 </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- VISUAL DEMONSTRATION (New Section for GIF - FIXED URL) -->
+    <section id="visual-demo" class="py-20 bg-white border-b border-slate-100">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 reveal">
+            <div class="text-center mb-12">
+                <h2 class="text-2xl lg:text-3xl font-serif font-bold text-slate-900 mb-4">
+                    Minh họa Luồng dữ liệu (Working System)
+                </h2>
+                <p class="text-slate-500 max-w-2xl mx-auto">Tất cả dữ liệu được số hóa và kết nối, phục vụ mục tiêu ra quyết định thời gian thực.</p>
+            </div>
+            
+            <div class="gif-container p-6 border-4 border-brand-500 rounded-3xl bg-brand-50/50 shadow-xl overflow-hidden">
+                <!-- Updated URL as requested -->
+                <img src="https://ik.imagekit.io/TNConsultant/Beegrowth/To%CC%82%CC%81i%20Va%CC%A3%CC%82n%20Ha%CC%80nh%20vo%CC%9B%CC%81i%20Lark%20_New_.gif" 
+                     alt="Minh họa luồng dữ liệu Sales, CSKH, HR, Kho hàng tự động" 
+                     loading="lazy"
+                     onerror="this.onerror=null; this.src='https://ik.imagekit.io/TNConsultant/Beegrowth/BEEGROWTH%20LOGO-1.png'; this.parentElement.innerHTML+='<p class=\'text-center text-red-500 mt-2\'>GIF failed to load. Please check file path.</p>';">
             </div>
         </div>
     </section>
